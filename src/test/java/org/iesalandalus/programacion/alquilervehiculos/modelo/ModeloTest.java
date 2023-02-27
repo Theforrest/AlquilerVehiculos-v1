@@ -17,7 +17,7 @@ import java.util.List;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IAlquileres;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
@@ -51,7 +51,7 @@ public class ModeloTest {
 	private static IAlquileres alquileres;
 
 	private static Cliente cliente;
-	private static Turismo turismo;
+	private static Vehiculo vehiculo;
 	private static Alquiler alquiler;
 	private static LocalDate hoy;
 	private static LocalDate ayer;
@@ -69,20 +69,20 @@ public class ModeloTest {
 		when(cliente.getNombre()).thenReturn("Bob Esponja");
 		when(cliente.getDni()).thenReturn("11223344B");
 		when(cliente.getTelefono()).thenReturn("950112233");
-		turismo = mock();
+		vehiculo = mock();
 		mockConstruction(Vehiculos.class);
-		mockConstruction(Turismo.class);
-		when(turismo.getMarca()).thenReturn("Seat");
-		when(turismo.getModelo()).thenReturn("León");
-		when(turismo.getMatricula()).thenReturn("1234BCD");
-		when(turismo.getCilindrada()).thenReturn(90);
+		mockConstruction(Vehiculo.class);
+		when(vehiculo.getMarca()).thenReturn("Seat");
+		when(vehiculo.getModelo()).thenReturn("León");
+		when(vehiculo.getMatricula()).thenReturn("1234BCD");
+		when(vehiculo.getPlazas()).thenReturn(90);
 		hoy = LocalDate.now();
 		ayer = hoy.minusDays(1);
 		alquiler = mock();
 		mockConstruction(Alquileres.class);
 		mockConstruction(Alquiler.class);
 		when(alquiler.getCliente()).thenReturn(cliente);
-		when(alquiler.getVehiculo()).thenReturn(turismo);
+		when(alquiler.getVehiculo()).thenReturn(vehiculo);
 		when(alquiler.getFechaAlquiler()).thenReturn(ayer);
 	}
 
@@ -113,19 +113,19 @@ public class ModeloTest {
 
 	@Test
 	void insertarVehiculoLlamaVehiculosInsertar() {
-		assertDoesNotThrow(() -> modelo.insertar(turismo));
+		assertDoesNotThrow(() -> modelo.insertar(vehiculo));
 		assertDoesNotThrow(() -> verify(vehiculos).insertar(any(Vehiculo.class)));
-		assertNotSame(turismo, modelo.buscar(turismo));
+		assertNotSame(vehiculo, modelo.buscar(vehiculo));
 	}
 
 	@Test
 	void insertarAlquilerLlamaClientesBuscarVehiculosBuscarAlquileresInsertar() {
 		InOrder orden = inOrder(clientes, vehiculos, alquileres);
 		when(clientes.buscar(cliente)).thenReturn(cliente);
-		when(vehiculos.buscar(turismo)).thenReturn(turismo);
+		when(vehiculos.buscar(vehiculo)).thenReturn(vehiculo);
 		assertDoesNotThrow(() -> modelo.insertar(alquiler));
 		orden.verify(clientes).buscar(cliente);
-		orden.verify(vehiculos).buscar(turismo);
+		orden.verify(vehiculos).buscar(vehiculo);
 		assertDoesNotThrow(() -> orden.verify(alquileres).insertar(any(Alquiler.class)));
 		assertNotSame(alquiler, modelo.buscar(alquiler));
 	}
@@ -147,17 +147,17 @@ public class ModeloTest {
 
 	@Test
 	void buscarVehiculoLlamaVehiculosBuscar() {
-		assertDoesNotThrow(() -> modelo.insertar(turismo));
-		Vehiculo vehiculoBuscado = modelo.buscar(turismo);
-		verify(vehiculos).buscar(turismo);
-		assertNotSame(turismo, vehiculoBuscado);
+		assertDoesNotThrow(() -> modelo.insertar(vehiculo));
+		Vehiculo vehiculoBuscado = modelo.buscar(vehiculo);
+		verify(vehiculos).buscar(vehiculo);
+		assertNotSame(vehiculo, vehiculoBuscado);
 	}
 
 	@Test
 	void buscarAlquilerLlamaAlquileresBuscar() {
 		assertDoesNotThrow(() -> modelo.insertar(cliente));
 		when(clientes.buscar(cliente)).thenReturn(cliente);
-		when(vehiculos.buscar(turismo)).thenReturn(turismo);
+		when(vehiculos.buscar(vehiculo)).thenReturn(vehiculo);
 		Alquiler alquilerBuscado = modelo.buscar(alquiler);
 		verify(alquileres).buscar(alquiler);
 		assertNotSame(alquiler, alquilerBuscado);
@@ -177,8 +177,8 @@ public class ModeloTest {
 	
 	@Test
 	void devolverVehiculoLlamaAlquileresDevolverVehiculo() {
-		assertDoesNotThrow(() -> modelo.devolver(turismo, hoy));
-		assertDoesNotThrow(() -> verify(alquileres).devolver(turismo, hoy));
+		assertDoesNotThrow(() -> modelo.devolver(vehiculo, hoy));
+		assertDoesNotThrow(() -> verify(alquileres).devolver(vehiculo, hoy));
 	}
 
 	@Test
@@ -206,12 +206,12 @@ public class ModeloTest {
 	void borrarVehiculoLlamaAlquileresGetPrestamosBorrarVehiculosBorrar() {
 		simularVehiculoConAlquileres();
 		InOrder orden = inOrder(vehiculos, alquileres);
-		assertDoesNotThrow(() -> modelo.borrar(turismo));
-		orden.verify(alquileres).get(turismo);
-		for (Alquiler alquiler : alquileres.get(turismo)) {
+		assertDoesNotThrow(() -> modelo.borrar(vehiculo));
+		orden.verify(alquileres).get(vehiculo);
+		for (Alquiler alquiler : alquileres.get(vehiculo)) {
 			assertDoesNotThrow(() -> orden.verify(alquileres).borrar(alquiler));
 		}
-		assertDoesNotThrow(() -> orden.verify(vehiculos).borrar(turismo));
+		assertDoesNotThrow(() -> orden.verify(vehiculos).borrar(vehiculo));
 	}
 
 	private void simularVehiculoConAlquileres() {
@@ -220,7 +220,7 @@ public class ModeloTest {
 		Alquiler alquiler2 = mock();
 		alquileresVehiculo.add(alquiler1);
 		alquileresVehiculo.add(alquiler2);
-		when(alquileres.get(turismo)).thenReturn(alquileresVehiculo);
+		when(alquileres.get(vehiculo)).thenReturn(alquileresVehiculo);
 	}
 	
 	@Test
@@ -243,11 +243,11 @@ public class ModeloTest {
 	@Test
 	void getVehiculossLlamaVehiculosGet() {
 		List<Vehiculo> vehiculosDevueltos = new ArrayList<>();
-		vehiculosDevueltos.add(turismo);
+		vehiculosDevueltos.add(vehiculo);
 		when(vehiculos.get()).thenReturn(vehiculosDevueltos);
 		List<Vehiculo> vehiculosExistentes = modelo.getListaVehiculos();
 		verify(vehiculos).get();
-		assertNotSame(turismo, vehiculosExistentes.get(0));
+		assertNotSame(vehiculo, vehiculosExistentes.get(0));
 	}
 	
 	@Test
@@ -274,9 +274,9 @@ public class ModeloTest {
 	void getAlquileresVehiculoLlamaAlquileresGetVehiculoo() {
 		List<Alquiler> alquileresDevueltos = new ArrayList<>();
 		alquileresDevueltos.add(alquiler);
-		when(alquileres.get(turismo)).thenReturn(alquileresDevueltos);
-		List<Alquiler> alquileresTurismo = modelo.getListaAlquileres(turismo);
-		verify(alquileres).get(turismo);
+		when(alquileres.get(vehiculo)).thenReturn(alquileresDevueltos);
+		List<Alquiler> alquileresTurismo = modelo.getListaAlquileres(vehiculo);
+		verify(alquileres).get(vehiculo);
 		assertNotSame(alquiler, alquileresTurismo.get(0));
 	}
 

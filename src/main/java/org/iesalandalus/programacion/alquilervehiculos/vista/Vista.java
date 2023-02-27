@@ -8,7 +8,7 @@ import javax.naming.OperationNotSupportedException;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.controlador.Controlador;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.texto.Consola;
 import org.iesalandalus.programacion.alquilervehiculos.vista.texto.Opcion;
 
@@ -108,8 +108,8 @@ public class Vista {
 	}
 
 	private void insertarTurismo() throws OperationNotSupportedException {
-		Turismo turismo = Consola.leerTurismo();
-		controlador.insertar(turismo);
+		Vehiculo vehiculo = Consola.leerTurismo();
+		controlador.insertar(vehiculo);
 
 	}
 
@@ -128,8 +128,8 @@ public class Vista {
 	}
 
 	private void buscarTurismo() {
-		Turismo turismo = Consola.leerTurismoMatricula();
-		System.out.printf("%s%n",(controlador.buscar(turismo) == null) ? "Turismo no encontrado" : controlador.buscar(turismo));
+		Vehiculo vehiculo = Consola.leerTurismoMatricula();
+		System.out.printf("%s%n",(controlador.buscar(vehiculo) == null) ? "Turismo no encontrado" : controlador.buscar(vehiculo));
 	}
 
 	private void buscarAlquiler() {
@@ -162,9 +162,9 @@ public class Vista {
 		}
 	}
 	private void borrarTurismo()  {
-		Turismo turismo = Consola.leerTurismoMatricula();
+		Vehiculo vehiculo = Consola.leerTurismoMatricula();
 		try {
-			controlador.borrar(turismo);
+			controlador.borrar(vehiculo);
 		} catch (OperationNotSupportedException e) {
 			e.getMessage();
 		}
@@ -180,9 +180,9 @@ public class Vista {
 		}
 	}
 	private void listarTurismos() {
-		List<Turismo> turismos = controlador.getTurismos();	
-		for (int i = 0; i < turismos.size(); i++) {
-			System.out.printf("%d. %s%n", i+1, turismos.get(i));
+		List<Vehiculo> vehiculos = controlador.getTurismos();	
+		for (int i = 0; i < vehiculos.size(); i++) {
+			System.out.printf("%d. %s%n", i+1, vehiculos.get(i));
 		}
 	}
 	private void listarAlquileres() {
@@ -199,8 +199,8 @@ public class Vista {
 		}
 	}
 	private void listarAlquileresTurismo() {
-		Turismo turismo = Consola.leerTurismoMatricula();
-		List<Alquiler> alquileres = controlador.getAlquileres(turismo);	
+		Vehiculo vehiculo = Consola.leerTurismoMatricula();
+		List<Alquiler> alquileres = controlador.getAlquileres(vehiculo);	
 		for (int i = 0; i < alquileres.size(); i++) {
 			System.out.printf("%d. %s%n", i+1, alquileres.get(i));
 		}

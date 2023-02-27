@@ -8,7 +8,7 @@ import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {
@@ -87,23 +87,23 @@ public class Consola {
 	public static Cliente leerCliente() {
 		return new Cliente(leerNombre() , leerCadena("Escriba el dni"), leerTelefono());
 	}
-	public static Turismo leerTurismo() {
+	public static Vehiculo leerTurismo() {
 		String marca = leerCadena("Escriba la marca del turismo");
 		String modelo = leerCadena("Escriba el modelo del turismo");
 		int cilindrada = leerEntero("Escriba la cilindrada del turismo");
 		String matricula = leerCadena("Escriba la matricula del turismo");
 
-		return new Turismo(marca, modelo, cilindrada, matricula);
+		return new Vehiculo(marca, modelo, cilindrada, matricula);
 	}
-	public static Turismo leerTurismoMatricula() {
+	public static Vehiculo leerTurismoMatricula() {
 		String matricula = leerCadena("Escriba la matricula del turismo");
-		return Turismo.getTurismoConMatricula(matricula);
+		return Vehiculo.getTurismoConMatricula(matricula);
 	}
 	public static Alquiler leerAlquiler() {
 		Cliente cliente = leerClienteDni();
-		Turismo turismo = leerTurismoMatricula();
+		Vehiculo vehiculo = leerTurismoMatricula();
 		LocalDate fechaAlquiler = leerFecha("Escriba la fecha de alquiler");
-		return new Alquiler(cliente, turismo, fechaAlquiler);
+		return new Alquiler(cliente, vehiculo, fechaAlquiler);
 	}
 	public static LocalDate leerFechaDevolucion() {
 		return leerFecha("Escriba la fecha de devolucion");

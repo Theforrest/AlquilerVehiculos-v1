@@ -8,22 +8,22 @@ import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria.Alquileres;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria.Clientes;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria.Turismos;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria.Vehiculos;
 
 public class Modelo {
 
 	private Clientes clientes;
-	private Turismos turismos;
+	private Vehiculos vehiculos;
 	private Alquileres alquileres;
 	
 	
 	
 	public void comenzar() {
 		clientes = new Clientes();
-		turismos = new Turismos();
+		vehiculos = new Vehiculos();
 		alquileres= new Alquileres();
 	}
 	public void terminar() {
@@ -36,9 +36,9 @@ public class Modelo {
 		clientes.insertar(new Cliente(cliente));
 		
 	}
-	public void insertar(Turismo turismo) throws OperationNotSupportedException {
+	public void insertar(Vehiculo vehiculo) throws OperationNotSupportedException {
 		
-		turismos.insertar(new Turismo(turismo));
+		vehiculos.insertar(new Vehiculo(vehiculo));
 		
 	}
 	public void insertar(Alquiler alquiler) throws OperationNotSupportedException {
@@ -48,13 +48,13 @@ public class Modelo {
 		if (clientes.buscar(alquiler.getCliente()) == null) {
 			throw new OperationNotSupportedException("ERROR: No existe el cliente del alquiler.");
 		}
-		if (turismos.buscar(alquiler.getTurismo()) == null) {
+		if (vehiculos.buscar(alquiler.getTurismo()) == null) {
 			throw new OperationNotSupportedException("ERROR: No existe el turismo del alquiler.");
 		}
 		
 
 		
-		alquileres.insertar(new Alquiler(clientes.buscar(alquiler.getCliente()), turismos.buscar(alquiler.getTurismo()), alquiler.getFechaAlquiler()));
+		alquileres.insertar(new Alquiler(clientes.buscar(alquiler.getCliente()), vehiculos.buscar(alquiler.getTurismo()), alquiler.getFechaAlquiler()));
 		
 	}
 	public Cliente buscar(Cliente cliente) {
@@ -64,12 +64,12 @@ public class Modelo {
 		}
 		return new Cliente(clientes.buscar(cliente));
 	}
-	public Turismo buscar(Turismo turismo) {
-		if (turismos.buscar(turismo) == null) {
+	public Vehiculo buscar(Vehiculo vehiculo) {
+		if (vehiculos.buscar(vehiculo) == null) {
 			return null;
 
 		}
-		return new Turismo(turismos.buscar(turismo));
+		return new Vehiculo(vehiculos.buscar(vehiculo));
 	}
 	public Alquiler buscar(Alquiler alquiler) {
 		if (alquileres.buscar(alquiler) == null) {
@@ -103,13 +103,13 @@ public class Modelo {
 		
 		
 	}
-	public void borrar(Turismo turismo) throws OperationNotSupportedException {
-		for (Alquiler alquiler : alquileres.get(turismo)) {
+	public void borrar(Vehiculo vehiculo) throws OperationNotSupportedException {
+		for (Alquiler alquiler : alquileres.get(vehiculo)) {
 			
 			alquileres.borrar(alquiler);
 			
 		}
-			turismos.borrar(turismo);
+			vehiculos.borrar(vehiculo);
 		
 		
 		
@@ -126,10 +126,10 @@ public class Modelo {
 		}
 		return copiaClientes;
 	}
-	public List<Turismo> getTurismos() {
-		List<Turismo> copiaTurismos = new ArrayList<>();
-		for (Turismo turismo : turismos.get()) {
-			copiaTurismos.add(new Turismo(turismo));
+	public List<Vehiculo> getTurismos() {
+		List<Vehiculo> copiaTurismos = new ArrayList<>();
+		for (Vehiculo vehiculo : vehiculos.get()) {
+			copiaTurismos.add(new Vehiculo(vehiculo));
 		}
 		return copiaTurismos;
 	}
@@ -147,9 +147,9 @@ public class Modelo {
 		}
 		return copiaAlquileres;
 	}
-	public List<Alquiler> getAlquileres(Turismo turismo) {
+	public List<Alquiler> getAlquileres(Vehiculo vehiculo) {
 		List<Alquiler> copiaAlquileres = new ArrayList<>();
-		for (Alquiler alquiler : alquileres.get(turismo)) {
+		for (Alquiler alquiler : alquileres.get(vehiculo)) {
 			copiaAlquileres.add(new Alquiler(alquiler));
 		}
 		return copiaAlquileres;
