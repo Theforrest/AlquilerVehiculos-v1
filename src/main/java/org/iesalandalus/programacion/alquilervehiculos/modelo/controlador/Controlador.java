@@ -78,18 +78,18 @@ public class Controlador {
 		modelo.borrar(alquiler);
 	}
 	public List<Cliente> getClientes() {
-		return modelo.getClientes();
+		return modelo.getListaClientes();
 	}
 	public List<Vehiculo> getTurismos() {
-		return modelo.getTurismos();
+		return modelo.getListaTurismos();
 	}
 	public List<Alquiler> getAlquileres() {
-		return modelo.getAlquileres();
+		return modelo.getListaAlquileres();
 	}
 	public List<Alquiler> getAlquileres(Cliente cliente) {
-		return modelo.getAlquileres(cliente);
+		return modelo.getListaAlquileres(cliente);
 	}
 	public List<Alquiler> getAlquileres(Vehiculo vehiculo) {
-		return modelo.getAlquileres(vehiculo);
+		return modelo.getListaAlquileres(vehiculo);
 	}
 }
