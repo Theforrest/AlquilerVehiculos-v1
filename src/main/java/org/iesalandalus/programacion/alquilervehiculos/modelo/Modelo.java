@@ -1,7 +1,6 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo;
 
-import java.time.LocalDate; 
-import java.util.ArrayList;
+import java.time.LocalDate;  
 import java.util.List;
 
 import javax.naming.OperationNotSupportedException;
@@ -13,9 +12,7 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IAlquilere
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IClientes;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IFuenteDatos;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IVehiculos;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria.Alquileres;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria.Clientes;
-import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria.Vehiculos;
+
 
 public abstract class Modelo {
 
@@ -41,9 +38,9 @@ public abstract class Modelo {
 	}
 
 	public void comenzar() {
-		fuenteDatos.crearClientes();
-		fuenteDatos.crearVehiculos();
-		fuenteDatos.crearAlquileres();
+		clientes = fuenteDatos.crearClientes();
+		vehiculos = fuenteDatos.crearVehiculos();
+		alquileres = fuenteDatos.crearAlquileres();
 	}
 
 	public void terminar() {

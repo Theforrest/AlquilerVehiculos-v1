@@ -7,7 +7,10 @@ import java.time.format.DateTimeParseException;
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Autobus;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
@@ -26,10 +29,10 @@ public class Consola {
 		System.out.printf("%n%s%n", subrayado);
 
 	}
-	public static void mostrarMenu() {
+	public static void mostrarMenuAcciones() {
 		mostrarCabezera("Este es un programa para manejar los alquileres de turismos realizados por clientes");
-		for(int i = 0; i < Opcion.values().length; i++) {
-			System.out.printf("%n%s", Opcion.values()[i]);
+		for(int i = 0; i < Accion.values().length; i++) {
+			System.out.printf("%n%s", Accion.values()[i]);
 
 		}
 	}
@@ -59,20 +62,20 @@ public class Consola {
 			return null;
 		
 	}
-	public static Opcion elegirOpcion()  {
-		Opcion opcion = null;
+	public static Accion elegirAccion()  {
+		Accion accion = null;
 		int i;
 		do {
-			i = leerEntero("Elige una opción");
+			i = leerEntero("Elige una acción");
 			try {
-				opcion = Opcion.get(i);
+				accion = Accion.get(i);
 			} catch (OperationNotSupportedException e) {
 				System.out.printf("%n%s%n%n", e.getMessage());
 			}
 		
-		} while(i< 0 || i > Opcion.values().length);
+		} while(i< 0 || i > Accion.values().length);
 
-		return opcion;
+		return accion;
 	}
 	public static Cliente leerClienteDni() {
 		String dni = leerCadena("Escriba el DNI del cliente");
@@ -87,17 +90,61 @@ public class Consola {
 	public static Cliente leerCliente() {
 		return new Cliente(leerNombre() , leerCadena("Escriba el dni"), leerTelefono());
 	}
-	public static Vehiculo leerTurismo() {
-		String marca = leerCadena("Escriba la marca del turismo");
-		String modelo = leerCadena("Escriba el modelo del turismo");
-		int cilindrada = leerEntero("Escriba la cilindrada del turismo");
-		String matricula = leerCadena("Escriba la matricula del turismo");
+	
+	public static void mostrarMenuTipoVehiculo() {
+		mostrarCabezera("Tipos de vehiculos");
+		for(int i = 0; i < TipoVehiculo.values().length; i++) {
+			System.out.printf("%n%s", TipoVehiculo.values()[i]);
 
-		return new Vehiculo(marca, modelo, cilindrada, matricula);
+		}
 	}
+	
+	public static TipoVehiculo elegirTipoVehiculo()  {
+		TipoVehiculo tipoVehiculo = null;
+		int i;
+		do {
+			i = leerEntero("Elige un tipo de vehiculo");
+			try {
+				tipoVehiculo = TipoVehiculo.get(i);
+			} catch (OperationNotSupportedException e) {
+				System.out.printf("%n%s%n%n", e.getMessage());
+			}
+		
+		} while(i< 0 || i > TipoVehiculo.values().length);
+
+		return tipoVehiculo;
+	}
+	
+	
+	
+	public static Vehiculo leerVehiculo(TipoVehiculo tipoVehiculo) {
+		String marca = leerCadena("Escriba la marca del vehiculo");
+		String modelo = leerCadena("Escriba el modelo del vehiculo");
+		String matricula = leerCadena("Escriba la matricula del vehiculo");
+
+		switch (tipoVehiculo) {
+		case AUTOBUS:
+			return new Autobus(marca, modelo, leerEntero("Escriba las plazas del autobus"), matricula);
+		case FURGONETA:
+			return new Furgoneta(marca, modelo,leerEntero("Escriba el pma de la furgoneta"), leerEntero("Escriba las plazas de la furgoneta"), matricula);
+			
+		case TURISMO:
+			return new Turismo(marca, modelo, leerEntero("Escriba la cilindrada del turismo"), matricula);
+			
+		
+		default:
+			return null;
+			
+	}
+	}
+	public static Vehiculo leerVehiculo() {
+		mostrarMenuTipoVehiculo();
+		return leerVehiculo(elegirTipoVehiculo());
+	}
+	
 	public static Vehiculo leerTurismoMatricula() {
 		String matricula = leerCadena("Escriba la matricula del turismo");
-		return Vehiculo.getTurismoConMatricula(matricula);
+		return Vehiculo.getVehiculoConMatricula(matricula);
 	}
 	public static Alquiler leerAlquiler() {
 		Cliente cliente = leerClienteDni();
@@ -107,6 +154,10 @@ public class Consola {
 	}
 	public static LocalDate leerFechaDevolucion() {
 		return leerFecha("Escriba la fecha de devolucion");
+	}
+	
+	public LocalDate leerMes() {
+		return null;
 	}
 	
 }
