@@ -13,31 +13,28 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 
-public class VistaTexto extends Vista{
+public class VistaTexto extends Vista {
 
-
-	
-	public void comenzar()  {
+	public void comenzar() {
 		Accion accion;
 		Accion.setVista(this);
 		do {
-		Consola.mostrarMenuAcciones();
-		accion = Consola.elegirAccion();
-		try {
-			Consola.mostrarCabezera(accion.toString());
-			accion.ejecutar();
-		} catch (IllegalArgumentException | OperationNotSupportedException e) {
-			System.out.printf("%n%s%n%n", e.getMessage());
-		}
-		} while(!(accion.equals(Accion.SALIR)));
-		
+			Consola.mostrarMenuAcciones();
+			accion = Consola.elegirAccion();
+			try {
+				Consola.mostrarCabezera(accion.toString());
+				accion.ejecutar();
+			} catch (IllegalArgumentException | OperationNotSupportedException e) {
+				System.out.printf("%n%s%n%n", e.getMessage());
+			}
+		} while (!(accion.equals(Accion.SALIR)));
+
 	}
-	
+
 	public void terminar() {
 		System.out.print("Adios");
 	}
-	
-	
+
 	public void insertarCliente() throws OperationNotSupportedException {
 		Cliente cliente = Consola.leerCliente();
 		getControlador().insertar(cliente);
@@ -58,20 +55,25 @@ public class VistaTexto extends Vista{
 		}
 
 	}
+
 	public void buscarCliente() {
 		Cliente cliente = Consola.leerClienteDni();
-		System.out.printf("%s%n",(getControlador().buscar(cliente) == null) ? "Cliente no encontrado" : getControlador().buscar(cliente));
+		System.out.printf("%s%n", (getControlador().buscar(cliente) == null) ? "Cliente no encontrado"
+				: getControlador().buscar(cliente));
 	}
 
 	public void buscarVehiculo() {
 		Vehiculo vehiculo = Consola.leerTurismoMatricula();
-		System.out.printf("%s%n",(getControlador().buscar(vehiculo) == null) ? "Turismo no encontrado" : getControlador().buscar(vehiculo));
+		System.out.printf("%s%n", (getControlador().buscar(vehiculo) == null) ? "Turismo no encontrado"
+				: getControlador().buscar(vehiculo));
 	}
 
 	public void buscarAlquiler() {
 		Alquiler alquiler = Consola.leerAlquiler();
-		System.out.printf("%s%n", (getControlador().buscar(alquiler) == null) ? "Alquiler no encontrado" : getControlador().buscar(alquiler));
+		System.out.printf("%s%n", (getControlador().buscar(alquiler) == null) ? "Alquiler no encontrado"
+				: getControlador().buscar(alquiler));
 	}
+
 	public void modificarCliente() throws OperationNotSupportedException {
 		Cliente cliente = Consola.leerClienteDni();
 		String nombre = Consola.leerNombre();
@@ -79,7 +81,8 @@ public class VistaTexto extends Vista{
 
 		getControlador().modificar(cliente, nombre, telefono);
 	}
-	public void devolverAlquilerCliente()   {
+
+	public void devolverAlquilerCliente() {
 		Cliente cliente = Consola.leerClienteDni();
 		LocalDate fechaDevolucion = Consola.leerFechaDevolucion();
 
@@ -89,7 +92,8 @@ public class VistaTexto extends Vista{
 			e.getMessage();
 		}
 	}
-	public void devolverAlquilerVehiculo()   {
+
+	public void devolverAlquilerVehiculo() {
 		Vehiculo vehiculo = Consola.leerTurismoMatricula();
 		LocalDate fechaDevolucion = Consola.leerFechaDevolucion();
 
@@ -99,7 +103,8 @@ public class VistaTexto extends Vista{
 			e.getMessage();
 		}
 	}
-	public void borrarCliente()  {
+
+	public void borrarCliente() {
 		Cliente cliente = Consola.leerClienteDni();
 		try {
 			getControlador().borrar(cliente);
@@ -107,7 +112,8 @@ public class VistaTexto extends Vista{
 			e.getMessage();
 		}
 	}
-	public void borrarVehiculo()  {
+
+	public void borrarVehiculo() {
 		Vehiculo vehiculo = Consola.leerTurismoMatricula();
 		try {
 			getControlador().borrar(vehiculo);
@@ -115,61 +121,76 @@ public class VistaTexto extends Vista{
 			e.getMessage();
 		}
 	}
-	public void borrarAlquiler() throws OperationNotSupportedException  {
+
+	public void borrarAlquiler() throws OperationNotSupportedException {
 		Alquiler alquiler = Consola.leerAlquiler();
 		getControlador().borrar(alquiler);
 	}
+
 	public void listarClientes() {
 		List<Cliente> clientes = getControlador().getClientes();
 		clientes.sort(Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni));
 		for (int i = 0; i < clientes.size(); i++) {
-			System.out.printf("%d. %s%n", i+1, clientes.get(i));
+			System.out.printf("%d. %s%n", i + 1, clientes.get(i));
 		}
 	}
+
 	public void listarVehiculos() {
-		List<Vehiculo> vehiculos = getControlador().getTurismos();	
-		vehiculos.sort(Comparator.comparing(Vehiculo::getMarca).thenComparing(Vehiculo::getModelo).thenComparing(Vehiculo::getMatricula));
+		List<Vehiculo> vehiculos = getControlador().getTurismos();
+		vehiculos.sort(Comparator.comparing(Vehiculo::getMarca).thenComparing(Vehiculo::getModelo)
+				.thenComparing(Vehiculo::getMatricula));
 		for (int i = 0; i < vehiculos.size(); i++) {
-			System.out.printf("%d. %s%n", i+1, vehiculos.get(i));
+			System.out.printf("%d. %s%n", i + 1, vehiculos.get(i));
 		}
 	}
+
 	public void listarAlquileres() {
 		List<Alquiler> alquileres = getControlador().getAlquileres();
 		alquileres.sort(Comparator.comparing(Alquiler::getFechaAlquiler));
 		for (int i = 0; i < alquileres.size(); i++) {
-			System.out.printf("%d. %s%n", i+1, alquileres.get(i));
+			System.out.printf("%d. %s%n", i + 1, alquileres.get(i));
 		}
 	}
+
 	public void listarAlquileresCliente() {
 		Cliente cliente = Consola.leerClienteDni();
-		List<Alquiler> alquileres = getControlador().getAlquileres(cliente);	
+		List<Alquiler> alquileres = getControlador().getAlquileres(cliente);
 		for (int i = 0; i < alquileres.size(); i++) {
-			System.out.printf("%d. %s%n", i+1, alquileres.get(i));
+			System.out.printf("%d. %s%n", i + 1, alquileres.get(i));
 		}
 	}
+
 	public void listarAlquileresVehiculo() {
 		Vehiculo vehiculo = Consola.leerTurismoMatricula();
-		List<Alquiler> alquileres = getControlador().getAlquileres(vehiculo);	
+		List<Alquiler> alquileres = getControlador().getAlquileres(vehiculo);
 		for (int i = 0; i < alquileres.size(); i++) {
-			System.out.printf("%d. %s%n", i+1, alquileres.get(i));
+			System.out.printf("%d. %s%n", i + 1, alquileres.get(i));
 		}
 	}
+
 	private Map<TipoVehiculo, Integer> inicializarEstadisticas() {
 		Map<TipoVehiculo, Integer> estadisticas = new TreeMap<>();
 		LocalDate mes = Consola.leerMes();
-		
+
 		List<Alquiler> alquileres = getControlador().getAlquileres();
-		
+
 		for (Alquiler alquiler : alquileres) {
 			if (alquiler.getFechaAlquiler().getMonth().equals(mes.getMonth())) {
-			estadisticas.put(TipoVehiculo.get(alquiler.getVehiculo()), estadisticas.containsKey(TipoVehiculo.get(alquiler.getVehiculo())) ? estadisticas.get(TipoVehiculo.get(alquiler.getVehiculo())) + 1 : 1);
-		
+				estadisticas.put(TipoVehiculo.get(alquiler.getVehiculo()),
+						estadisticas.containsKey(TipoVehiculo.get(alquiler.getVehiculo()))
+								? estadisticas.get(TipoVehiculo.get(alquiler.getVehiculo())) + 1
+								: 1);
+
 			}
-			}
-		
+		}
+
 		return estadisticas;
 	}
+
 	public void mostrarEstadisticasMensuales() {
-		System.out.print(inicializarEstadisticas());
+		Map<TipoVehiculo, Integer> estadisticas = inicializarEstadisticas();
+		for (Map.Entry<TipoVehiculo, Integer> entry : estadisticas.entrySet()) {
+		    System.out.printf("%s alquilados: %s%n", entry.getKey(), entry.getValue());
+		}
 	}
 }

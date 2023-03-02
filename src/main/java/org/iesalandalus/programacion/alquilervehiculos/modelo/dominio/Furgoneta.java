@@ -1,13 +1,13 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
-public class Furgoneta extends Vehiculo{
+public class Furgoneta extends Vehiculo {
 
 	private static final int FACTOR_PMA = 100;
 	private static final int FACTOR_PLAZAS = 1;
 	private int plazas;
 	private int pma;
 
-	public Furgoneta(String marca, String modelo,int pma, int plazas, String matricula) {
+	public Furgoneta(String marca, String modelo, int pma, int plazas, String matricula) {
 		super(marca, modelo, matricula);
 		setPlazas(plazas);
 		setPma(pma);
@@ -16,16 +16,15 @@ public class Furgoneta extends Vehiculo{
 
 	public Furgoneta(Furgoneta furgoneta) {
 		super(furgoneta);
-		setPlazas(furgoneta.getPlazas());
-		setPma(furgoneta.getPma());
+		plazas = furgoneta.getPlazas();
+		pma = furgoneta.getPma();
 	}
-
 
 	@Override
 	public int getFactorPrecio() {
 		return pma / FACTOR_PMA + plazas * FACTOR_PLAZAS;
 	}
-	
+
 	public int getPma() {
 		return pma;
 	}
@@ -47,12 +46,10 @@ public class Furgoneta extends Vehiculo{
 		}
 		this.plazas = plazas;
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("%s %s (%s kg, %s plazas) - %s", getMarca(), getModelo(), pma,  plazas, getMatricula());
+		return String.format("%s %s (%d kg, %d plazas) - %s", getMarca(), getModelo(), pma, plazas, getMatricula());
 	}
-
-
 
 }

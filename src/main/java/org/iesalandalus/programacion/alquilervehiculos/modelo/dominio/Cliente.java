@@ -6,24 +6,24 @@ public class Cliente {
 	private static final String ER_NOMBRE = "^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)( [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$";
 	private static final String ER_DNI = "\\d{8}[A-Z]";
 	private static final String ER_TELEFONO = "[96]\\d{8}";
-	
+
 	private String nombre;
 	private String dni;
 	private String telefono;
-	
+
 	public Cliente(String nombre, String dni, String telefono) {
 		setNombre(nombre);
 		setDni(dni);
 		setTelefono(telefono);
 	}
-	
+
 	public Cliente(Cliente cliente) {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No es posible copiar un cliente nulo.");
 		}
-		setNombre(cliente.getNombre());
-		setDni(cliente.getDni());
-		setTelefono(cliente.getTelefono());
+		nombre = cliente.getNombre();
+		dni = cliente.getDni();
+		telefono = cliente.getTelefono();
 	}
 
 	public String getNombre() {
@@ -41,22 +41,23 @@ public class Cliente {
 	}
 
 	private boolean comprobarDni(String dni) {
-		final char[] LETRAS_DNI = {'T','R','W','A','G','M','Y','F','P','D','X','B','N','J','Z','S','Q','V','H','L','C','K','E'};
-		return LETRAS_DNI[Integer.parseInt(dni.substring(0, dni.length()-1))%23] == dni.charAt(dni.length() -1);
+		final char[] LETRAS_DNI = { 'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q',
+				'V', 'H', 'L', 'C', 'K', 'E' };
+		return LETRAS_DNI[Integer.parseInt(dni.substring(0, dni.length() - 1)) % 23] == dni.charAt(dni.length() - 1);
 	}
-	
+
 	public String getDni() {
 		return dni;
 	}
 
-	private void setDni(String dni) {	
+	private void setDni(String dni) {
 		if (dni == null) {
 			throw new NullPointerException("ERROR: El DNI no puede ser nulo.");
 		}
-		if (!dni.matches(ER_DNI) ) {
+		if (!dni.matches(ER_DNI)) {
 			throw new IllegalArgumentException("ERROR: El DNI no tiene un formato válido.");
 		}
-		if ( !comprobarDni(dni)) {
+		if (!comprobarDni(dni)) {
 			throw new IllegalArgumentException("ERROR: La letra del DNI no es correcta.");
 		}
 		this.dni = dni;
@@ -75,7 +76,7 @@ public class Cliente {
 		}
 		this.telefono = telefono;
 	}
-	
+
 	public static Cliente getClienteConDni(String dni) {
 		return new Cliente("Ejemplo", dni, "950112233");
 	}
@@ -101,6 +102,5 @@ public class Cliente {
 	public String toString() {
 		return String.format("%s - %s (%s)", nombre, dni, telefono);
 	}
-	
-	
+
 }

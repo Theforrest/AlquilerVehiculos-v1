@@ -26,15 +26,14 @@ public class Alquiler {
 		if (alquiler == null) {
 			throw new NullPointerException("ERROR: No es posible copiar un alquiler nulo.");
 		}
-		
-		setCliente(new Cliente(alquiler.getCliente()));	
-		setVehiculo(Vehiculo.copiar(alquiler.getVehiculo()));
-		
-		setFechaAlquiler(alquiler.getFechaAlquiler());
-		if (alquiler.getFechaDevolucion() != null) {
-			setFechaDevolucion(alquiler.getFechaDevolucion());
-		}
-		
+
+		cliente = new Cliente(alquiler.getCliente());
+		vehiculo = Vehiculo.copiar(alquiler.getVehiculo());
+
+		fechaAlquiler = alquiler.getFechaAlquiler();
+
+		fechaDevolucion = alquiler.getFechaDevolucion();
+
 	}
 
 	public LocalDate getFechaAlquiler() {
@@ -60,7 +59,8 @@ public class Alquiler {
 			throw new NullPointerException("ERROR: La fecha de devolución no puede ser nula.");
 		}
 		if (fechaDevolucion.isEqual(fechaAlquiler) || fechaDevolucion.isBefore(fechaAlquiler)) {
-			throw new IllegalArgumentException("ERROR: La fecha de devolución debe ser posterior a la fecha de alquiler.");
+			throw new IllegalArgumentException(
+					"ERROR: La fecha de devolución debe ser posterior a la fecha de alquiler.");
 		}
 		if (fechaDevolucion.isAfter(LocalDate.now())) {
 			throw new IllegalArgumentException("ERROR: La fecha de devolución no puede ser futura.");
@@ -100,9 +100,10 @@ public class Alquiler {
 	public int getPrecio() {
 		int precio = 0;
 		if (fechaDevolucion != null) {
-			precio = ((PRECIO_DIA) + vehiculo.getFactorPrecio()) * (int)(ChronoUnit.DAYS.between(fechaAlquiler, fechaDevolucion));
+			precio = ((PRECIO_DIA) + vehiculo.getFactorPrecio())
+					* (int) (ChronoUnit.DAYS.between(fechaAlquiler, fechaDevolucion));
 		}
-	
+
 		return precio;
 	}
 

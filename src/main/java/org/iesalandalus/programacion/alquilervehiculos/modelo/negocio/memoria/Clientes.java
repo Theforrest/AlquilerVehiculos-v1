@@ -16,6 +16,7 @@ public class Clientes implements IClientes {
 		coleccionClientes = new ArrayList<>();
 	}
 
+	@Override
 	public List<Cliente> get() {
 		List<Cliente> copiaClientes = new ArrayList<>();
 		for (Cliente cliente : coleccionClientes) {
@@ -24,10 +25,12 @@ public class Clientes implements IClientes {
 		return copiaClientes;
 	}
 
+	@Override
 	public int getCantidad() {
 		return coleccionClientes.size();
 	}
 
+	@Override
 	public void insertar(Cliente cliente) throws OperationNotSupportedException {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede insertar un cliente nulo.");
@@ -38,6 +41,7 @@ public class Clientes implements IClientes {
 		coleccionClientes.add(cliente);
 	}
 
+	@Override
 	public Cliente buscar(Cliente cliente) {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede buscar un cliente nulo.");
@@ -48,6 +52,7 @@ public class Clientes implements IClientes {
 		return coleccionClientes.get(coleccionClientes.indexOf(cliente));
 	}
 
+	@Override
 	public void borrar(Cliente cliente) throws OperationNotSupportedException {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede borrar un cliente nulo.");
@@ -57,6 +62,7 @@ public class Clientes implements IClientes {
 		}
 	}
 
+	@Override
 	public void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede modificar un cliente nulo.");
@@ -77,7 +83,7 @@ public class Clientes implements IClientes {
 					buscar(cliente).setTelefono(telefono);
 				}
 			}
-		
+
 		}
 
 	}

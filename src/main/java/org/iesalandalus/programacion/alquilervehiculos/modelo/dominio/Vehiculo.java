@@ -2,8 +2,6 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 import java.util.Objects;
 
-import org.iesalandalus.programacion.alquilervehiculos.vista.texto.TipoVehiculo;
-
 public abstract class Vehiculo {
 	private static final String ER_MARCA = "^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)( [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$|^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\\-[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)$|^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$|^([A-ZÁÉÍÓÚÑ]+)+$";
 	private static final String ER_MATRICULA = "\\d{4}[QWRTYPSDFGHJKLZXCVBNM]{3}";
@@ -22,40 +20,31 @@ public abstract class Vehiculo {
 		if (vehiculo == null) {
 			throw new NullPointerException("ERROR: No es posible copiar un vehículo nulo.");
 		}
-		
-			setMarca(vehiculo.getMarca());
-		
-			setModelo(vehiculo.getModelo());
 
-			setMatricula(vehiculo.getMatricula());
+		marca = vehiculo.getMarca();
 
-		
+		modelo = vehiculo.getModelo();
+
+		matricula = vehiculo.getMatricula();
+
 	}
 
 	public static Vehiculo copiar(Vehiculo vehiculo) {
 
-		TipoVehiculo tipoVehiculo = TipoVehiculo.get(vehiculo);
-		if (tipoVehiculo.equals(TipoVehiculo.TURISMO)) {
-			return new Turismo((Turismo)vehiculo);
-		} else if (tipoVehiculo.equals(TipoVehiculo.AUTOBUS)) {
-			return new Autobus((Autobus)vehiculo);
-		} else if (tipoVehiculo.equals(TipoVehiculo.FURGONETA)) {
-			return new Furgoneta((Furgoneta)vehiculo);
-		} 
-		return null;
-		
+		Vehiculo copia = null;
+		if (vehiculo instanceof Turismo turismo) {
+			copia = new Turismo(turismo);
+		} else if (vehiculo instanceof Autobus autobus) {
+			copia = new Autobus(autobus);
+		} else if (vehiculo instanceof Furgoneta furgoneta) {
+			copia = new Furgoneta(furgoneta);
+		}
+		return copia;
+
 	}
 
 	public static Vehiculo getVehiculoConMatricula(String matricula) {
-		return new Vehiculo("A", "A", matricula) {
-
-			@Override
-			public int getFactorPrecio() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-		};
-
+		return new Turismo("A", "A", 1, matricula);
 	}
 
 	public abstract int getFactorPrecio();
@@ -117,6 +106,4 @@ public abstract class Vehiculo {
 		return Objects.equals(matricula, other.matricula);
 	}
 
-	
-	
 }

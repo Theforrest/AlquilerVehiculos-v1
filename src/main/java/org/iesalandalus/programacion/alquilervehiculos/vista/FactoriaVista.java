@@ -11,6 +11,6 @@ public enum FactoriaVista {
 			return new VistaTexto();
 		}
 	};
-	
+
 	public abstract Vista crear();
 }

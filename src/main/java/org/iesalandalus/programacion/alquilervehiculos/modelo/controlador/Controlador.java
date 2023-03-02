@@ -14,6 +14,7 @@ import org.iesalandalus.programacion.alquilervehiculos.vista.Vista;
 public class Controlador {
 	private Vista vista;
 	private Modelo modelo;
+
 	public Controlador(Modelo modelo, Vista vista) {
 		if (modelo == null) {
 			throw new NullPointerException("ERROR: El modelo no puede ser nulo.");
@@ -25,17 +26,17 @@ public class Controlador {
 		this.modelo = modelo;
 	}
 
-	public void comenzar()  {
+	public void comenzar() {
 		modelo.comenzar();
 		vista.comenzar();
-		
+
 	}
-	
+
 	public void terminar() {
 		modelo.terminar();
 		vista.terminar();
 	}
-	
+
 	public void insertar(Cliente cliente) throws OperationNotSupportedException {
 		modelo.insertar(cliente);
 	}
@@ -46,11 +47,11 @@ public class Controlador {
 	}
 
 	public void insertar(Alquiler alquiler) throws OperationNotSupportedException {
-		
-			modelo.insertar(alquiler);
-		
+
+		modelo.insertar(alquiler);
 
 	}
+
 	public Cliente buscar(Cliente cliente) {
 		return modelo.buscar(cliente);
 	}
@@ -62,36 +63,47 @@ public class Controlador {
 	public Alquiler buscar(Alquiler alquiler) {
 		return modelo.buscar(alquiler);
 	}
+
 	public void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
 		modelo.modificar(cliente, nombre, telefono);
 	}
-	public void devolver(Cliente cliente, LocalDate fechaDevolucion) throws OperationNotSupportedException  {
+
+	public void devolver(Cliente cliente, LocalDate fechaDevolucion) throws OperationNotSupportedException {
 		modelo.devolver(cliente, fechaDevolucion);
 	}
-	public void devolver(Vehiculo vehiculo, LocalDate fechaDevolucion) throws OperationNotSupportedException  {
+
+	public void devolver(Vehiculo vehiculo, LocalDate fechaDevolucion) throws OperationNotSupportedException {
 		modelo.devolver(vehiculo, fechaDevolucion);
 	}
+
 	public void borrar(Cliente cliente) throws OperationNotSupportedException {
 		modelo.borrar(cliente);
 	}
+
 	public void borrar(Vehiculo vehiculo) throws OperationNotSupportedException {
 		modelo.borrar(vehiculo);
 	}
+
 	public void borrar(Alquiler alquiler) throws OperationNotSupportedException {
 		modelo.borrar(alquiler);
 	}
+
 	public List<Cliente> getClientes() {
 		return modelo.getListaClientes();
 	}
+
 	public List<Vehiculo> getTurismos() {
 		return modelo.getListaVehiculos();
 	}
+
 	public List<Alquiler> getAlquileres() {
 		return modelo.getListaAlquileres();
 	}
+
 	public List<Alquiler> getAlquileres(Cliente cliente) {
 		return modelo.getListaAlquileres(cliente);
 	}
+
 	public List<Alquiler> getAlquileres(Vehiculo vehiculo) {
 		return modelo.getListaAlquileres(vehiculo);
 	}

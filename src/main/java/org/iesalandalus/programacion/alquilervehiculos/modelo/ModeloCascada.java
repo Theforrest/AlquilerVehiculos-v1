@@ -11,28 +11,27 @@ import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IFuenteDatos;
 
-public class ModeloCascada extends Modelo{
-	
+public class ModeloCascada extends Modelo {
+
 	public ModeloCascada(IFuenteDatos fuenteDatos) {
 		setFuenteDatos(fuenteDatos);
 	}
 
-	public void terminar() {
-		System.out.printf("%nEL modelo ha terminado%n");
-	}
-
+	@Override
 	public void insertar(Cliente cliente) throws OperationNotSupportedException {
 
 		getClientes().insertar(new Cliente(cliente));
 
 	}
 
+	@Override
 	public void insertar(Vehiculo vehiculo) throws OperationNotSupportedException {
 
 		getVehiculos().insertar(Vehiculo.copiar(vehiculo));
 
 	}
 
+	@Override
 	public void insertar(Alquiler alquiler) throws OperationNotSupportedException {
 		if (alquiler == null) {
 			throw new NullPointerException("ERROR: No se puede realizar un alquiler nulo.");
@@ -49,6 +48,7 @@ public class ModeloCascada extends Modelo{
 
 	}
 
+	@Override
 	public Cliente buscar(Cliente cliente) {
 		if (getClientes().buscar(cliente) == null) {
 			return null;
@@ -57,6 +57,7 @@ public class ModeloCascada extends Modelo{
 		return new Cliente(getClientes().buscar(cliente));
 	}
 
+	@Override
 	public Vehiculo buscar(Vehiculo vehiculo) {
 		if (getVehiculos().buscar(vehiculo) == null) {
 			return null;
@@ -65,6 +66,7 @@ public class ModeloCascada extends Modelo{
 		return Vehiculo.copiar(getVehiculos().buscar(vehiculo));
 	}
 
+	@Override
 	public Alquiler buscar(Alquiler alquiler) {
 		if (getAlquileres().buscar(alquiler) == null) {
 			return null;
@@ -73,24 +75,28 @@ public class ModeloCascada extends Modelo{
 		return new Alquiler(getAlquileres().buscar(alquiler));
 	}
 
+	@Override
 	public void modificar(Cliente cliente, String nombre, String telefono) throws OperationNotSupportedException {
 
 		getClientes().modificar(cliente, nombre, telefono);
 
 	}
 
+	@Override
 	public void devolver(Cliente cliente, LocalDate fechaDevolucion) throws OperationNotSupportedException {
 
 		getAlquileres().devolver(cliente, fechaDevolucion);
 
 	}
 
+	@Override
 	public void devolver(Vehiculo vehiculo, LocalDate fechaDevolucion) throws OperationNotSupportedException {
 
 		getAlquileres().devolver(vehiculo, fechaDevolucion);
 
 	}
 
+	@Override
 	public void borrar(Cliente cliente) throws OperationNotSupportedException {
 
 		for (Alquiler alquiler : getAlquileres().get(cliente)) {
@@ -102,6 +108,7 @@ public class ModeloCascada extends Modelo{
 
 	}
 
+	@Override
 	public void borrar(Vehiculo vehiculo) throws OperationNotSupportedException {
 		for (Alquiler alquiler : getAlquileres().get(vehiculo)) {
 
@@ -112,12 +119,14 @@ public class ModeloCascada extends Modelo{
 
 	}
 
+	@Override
 	public void borrar(Alquiler alquiler) throws OperationNotSupportedException {
 
 		getAlquileres().borrar(alquiler);
 
 	}
 
+	@Override
 	public List<Cliente> getListaClientes() {
 		List<Cliente> copiaClientes = new ArrayList<>();
 		for (Cliente cliente : getClientes().get()) {
@@ -126,6 +135,7 @@ public class ModeloCascada extends Modelo{
 		return copiaClientes;
 	}
 
+	@Override
 	public List<Vehiculo> getListaVehiculos() {
 		List<Vehiculo> copiaTurismos = new ArrayList<>();
 		for (Vehiculo vehiculo : getVehiculos().get()) {
@@ -134,6 +144,7 @@ public class ModeloCascada extends Modelo{
 		return copiaTurismos;
 	}
 
+	@Override
 	public List<Alquiler> getListaAlquileres() {
 		List<Alquiler> copiaAlquileres = new ArrayList<>();
 		for (Alquiler alquiler : getAlquileres().get()) {
@@ -142,6 +153,7 @@ public class ModeloCascada extends Modelo{
 		return copiaAlquileres;
 	}
 
+	@Override
 	public List<Alquiler> getListaAlquileres(Cliente cliente) {
 		List<Alquiler> copiaAlquileres = new ArrayList<>();
 		for (Alquiler alquiler : getAlquileres().get(cliente)) {
@@ -150,6 +162,7 @@ public class ModeloCascada extends Modelo{
 		return copiaAlquileres;
 	}
 
+	@Override
 	public List<Alquiler> getListaAlquileres(Vehiculo vehiculo) {
 		List<Alquiler> copiaAlquileres = new ArrayList<>();
 		for (Alquiler alquiler : getAlquileres().get(vehiculo)) {

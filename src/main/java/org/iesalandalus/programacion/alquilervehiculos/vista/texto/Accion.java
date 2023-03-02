@@ -6,109 +6,120 @@ public enum Accion {
 	SALIR("Salir") {
 		@Override
 		public void ejecutar() {
-    // Vacio
-  }
-	}, INSERTAR_CLIENTE("Insertar cliente") {
+			// Vacio
+		}
+	},
+	INSERTAR_CLIENTE("Insertar cliente") {
 		@Override
 		public void ejecutar() throws OperationNotSupportedException {
 			vista.insertarCliente();
-			
+
 		}
-	}, INSERTAR_VEHICULO("Insertar vehiculo") {
+	},
+	INSERTAR_VEHICULO("Insertar vehiculo") {
 		@Override
 		public void ejecutar() throws OperationNotSupportedException {
 			vista.insertarVehiculo();
-			
+
 		}
 	},
 	INSERTAR_ALQUILER("Insertar alquiler") {
 		@Override
 		public void ejecutar() {
-			vista.insertarAlquiler();			
+			vista.insertarAlquiler();
 		}
-	}, BUSCAR_CLIENTE("Buscar cliente") {
+	},
+	BUSCAR_CLIENTE("Buscar cliente") {
 		@Override
 		public void ejecutar() {
-			vista.buscarCliente();			
+			vista.buscarCliente();
 		}
-	}, BUSCAR_VEHICULO("Buscar vehiculo") {
+	},
+	BUSCAR_VEHICULO("Buscar vehiculo") {
 		@Override
 		public void ejecutar() {
-			vista.buscarVehiculo();			
+			vista.buscarVehiculo();
 		}
 	},
 	BUSCAR_ALQUILER("Buscar alquiler") {
 		@Override
 		public void ejecutar() {
-			vista.buscarAlquiler();			
+			vista.buscarAlquiler();
 		}
-	}, MODIFICAR_CLIENTE("Modificar cliente") {
+	},
+	MODIFICAR_CLIENTE("Modificar cliente") {
 		@Override
 		public void ejecutar() throws OperationNotSupportedException {
-			vista.modificarCliente();			
+			vista.modificarCliente();
 		}
-	}, DEVOLVER_ALQUILER_CLIENTE("Devolver alquiler de un cliente") {
+	},
+	DEVOLVER_ALQUILER_CLIENTE("Devolver alquiler de un cliente") {
 		@Override
 		public void ejecutar() {
 			vista.devolverAlquilerCliente();
-			
+
 		}
-	}, DEVOLVER_ALQUILER_VEHICULO("Devolver alquiler de un vehiculo") {
+	},
+	DEVOLVER_ALQUILER_VEHICULO("Devolver alquiler de un vehiculo") {
 		@Override
 		public void ejecutar() {
 			vista.devolverAlquilerVehiculo();
-			
+
 		}
 	},
 	BORRAR_CLIENTE("Borrar cliente") {
 		@Override
 		public void ejecutar() {
-			vista.borrarCliente();			
+			vista.borrarCliente();
 		}
-	}, BORRAR_VEHICULO("Borrar vehiculo") {
+	},
+	BORRAR_VEHICULO("Borrar vehiculo") {
 		@Override
 		public void ejecutar() {
-			vista.borrarVehiculo();			
+			vista.borrarVehiculo();
 		}
-	}, BORRAR_ALQUILER("Borrar alquiler") {
+	},
+	BORRAR_ALQUILER("Borrar alquiler") {
 		@Override
 		public void ejecutar() throws OperationNotSupportedException {
 			vista.borrarAlquiler();
-			
+
 		}
 	},
 	LISTAR_CLIENTES("Listar clientes") {
 		@Override
 		public void ejecutar() {
-			vista.listarClientes();		
+			vista.listarClientes();
 		}
-	}, LISTAR_VEHICULOS("Listar vehiculos") {
+	},
+	LISTAR_VEHICULOS("Listar vehiculos") {
 		@Override
 		public void ejecutar() {
-			vista.listarVehiculos();			
+			vista.listarVehiculos();
 		}
-	}, LISTAR_ALQUILERES("Listar alquileres") {
+	},
+	LISTAR_ALQUILERES("Listar alquileres") {
 		@Override
 		public void ejecutar() {
-			vista.listarAlquileres();			
+			vista.listarAlquileres();
 		}
 	},
 	LISTAR_ALQUILERES_CLIENTE("Listar alquileres de un cliente") {
 		@Override
 		public void ejecutar() {
-			vista.listarAlquileresCliente();			
+			vista.listarAlquileresCliente();
 		}
 	},
 	LISTAR_ALQUILERES_VEHICULO("Listar alquileres de un vehiculo") {
 		@Override
 		public void ejecutar() {
-			vista.listarAlquileresVehiculo();			
+			vista.listarAlquileresVehiculo();
 		}
 	},
 	MOSTRAR_ESTADISTICAS_MENSUALES("Mostrar estadisticas mensuales") {
 		@Override
 		public void ejecutar() {
-			vista.mostrarEstadisticasMensuales();			
+			vista.mostrarEstadisticasMensuales();
 		}
 	};
 
@@ -124,20 +135,24 @@ public enum Accion {
 		}
 		this.texto = texto;
 	}
+
 	static void setVista(VistaTexto vistaa) {
 		vista = vistaa;
 	}
+
 	public abstract void ejecutar() throws OperationNotSupportedException;
+
 	private static boolean esOrdinalValido(int ordinal) {
 		return ordinal >= 0 && Accion.values().length > ordinal;
 	}
-	 
+
 	public static Accion get(int ordinal) throws OperationNotSupportedException {
 		if (!(esOrdinalValido(ordinal))) {
 			throw new OperationNotSupportedException("ERROR: El ordinal no es valido.");
 		}
 		return Accion.values()[ordinal];
 	}
+
 	@Override
 	public String toString() {
 		return String.format("%d. %s", ordinal(), texto);
