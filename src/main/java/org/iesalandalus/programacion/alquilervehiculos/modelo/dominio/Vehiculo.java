@@ -2,6 +2,8 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 import java.util.Objects;
 
+import org.iesalandalus.programacion.alquilervehiculos.vista.texto.TipoVehiculo;
+
 public abstract class Vehiculo {
 	private static final String ER_MARCA = "^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)( [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$|^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\\-[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)$|^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$|^([A-ZÁÉÍÓÚÑ]+)+$";
 	private static final String ER_MATRICULA = "\\d{4}[QWRTYPSDFGHJKLZXCVBNM]{3}";
@@ -20,30 +22,28 @@ public abstract class Vehiculo {
 		if (vehiculo == null) {
 			throw new NullPointerException("ERROR: No es posible copiar un vehículo nulo.");
 		}
-		if (vehiculo.getMarca() != null) {
-			setMarca(vehiculo.getMarca());
-		}
 		
-		if (vehiculo.getModelo() != null) {
+			setMarca(vehiculo.getMarca());
+		
 			setModelo(vehiculo.getModelo());
 
-		}
-		if (vehiculo.getMatricula() != null) {
 			setMatricula(vehiculo.getMatricula());
 
-		}
+		
 	}
 
 	public static Vehiculo copiar(Vehiculo vehiculo) {
 
-		return new Vehiculo(vehiculo) {
-
-			@Override
-			public int getFactorPrecio() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-		};
+		TipoVehiculo tipoVehiculo = TipoVehiculo.get(vehiculo);
+		if (tipoVehiculo.equals(TipoVehiculo.TURISMO)) {
+			return new Turismo((Turismo)vehiculo);
+		} else if (tipoVehiculo.equals(TipoVehiculo.AUTOBUS)) {
+			return new Autobus((Autobus)vehiculo);
+		} else if (tipoVehiculo.equals(TipoVehiculo.FURGONETA)) {
+			return new Furgoneta((Furgoneta)vehiculo);
+		} 
+		return null;
+		
 	}
 
 	public static Vehiculo getVehiculoConMatricula(String matricula) {
@@ -117,4 +117,6 @@ public abstract class Vehiculo {
 		return Objects.equals(matricula, other.matricula);
 	}
 
+	
+	
 }

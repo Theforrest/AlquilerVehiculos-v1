@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -154,9 +155,21 @@ public class VistaTexto extends Vista{
 		}
 	}
 	private Map<TipoVehiculo, Integer> inicializarEstadisticas() {
-		return null;
+		Map<TipoVehiculo, Integer> estadisticas = new TreeMap<>();
+		LocalDate mes = Consola.leerMes();
+		
+		List<Alquiler> alquileres = getControlador().getAlquileres();
+		
+		for (Alquiler alquiler : alquileres) {
+			if (alquiler.getFechaAlquiler().getMonth().equals(mes.getMonth())) {
+			estadisticas.put(TipoVehiculo.get(alquiler.getVehiculo()), estadisticas.containsKey(TipoVehiculo.get(alquiler.getVehiculo())) ? estadisticas.get(TipoVehiculo.get(alquiler.getVehiculo())) + 1 : 1);
+		
+			}
+			}
+		
+		return estadisticas;
 	}
 	public void mostrarEstadisticasMensuales() {
-		Map<TipoVehiculo, Integer> estadisticas = inicializarEstadisticas();
+		System.out.print(inicializarEstadisticas());
 	}
 }

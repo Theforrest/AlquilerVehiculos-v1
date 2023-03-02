@@ -117,7 +117,7 @@ public class Consola {
 	
 	
 	
-	public static Vehiculo leerVehiculo(TipoVehiculo tipoVehiculo) {
+	private static Vehiculo leerVehiculo(TipoVehiculo tipoVehiculo) {
 		String marca = leerCadena("Escriba la marca del vehiculo");
 		String modelo = leerCadena("Escriba el modelo del vehiculo");
 		String matricula = leerCadena("Escriba la matricula del vehiculo");
@@ -156,8 +156,13 @@ public class Consola {
 		return leerFecha("Escriba la fecha de devolucion");
 	}
 	
-	public LocalDate leerMes() {
-		return null;
+	public static LocalDate leerMes() {
+		int mes;
+		do {
+		mes = leerEntero("Escriba el mes");
+		} while (mes < 1 | mes > 12);
+		
+		return LocalDate.parse("01-01-1970", FORMATO_FECHA).withMonth(mes);
 	}
 	
 }

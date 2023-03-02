@@ -2,6 +2,11 @@ package org.iesalandalus.programacion.alquilervehiculos.vista.texto;
 
 import javax.naming.OperationNotSupportedException;
 
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Autobus;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
+
 public enum TipoVehiculo {
 
 	TURISMO("Turismo"), AUTOBUS("Autobus"), FURGONETA("Furgoneta");
@@ -26,6 +31,19 @@ public enum TipoVehiculo {
 			throw new OperationNotSupportedException("ERROR: El ordinal no es valido.");
 		}
 		return TipoVehiculo.values()[ordinal];
+	}
+	public static TipoVehiculo get(Vehiculo vehiculo)  {
+		if (vehiculo == null) {
+			throw new NullPointerException("ERROR: El vehiculo no puede ser nulo.");
+		}
+		if (vehiculo.getClass().equals(Turismo.class)) {
+			return TipoVehiculo.TURISMO;
+		} else if (vehiculo.getClass().equals(Autobus.class)) {
+			return TipoVehiculo.AUTOBUS;
+		} else if (vehiculo.getClass().equals(Furgoneta.class)) {
+			return TipoVehiculo.FURGONETA;
+		} 
+		return null;
 	}
 	@Override
 	public String toString() {
