@@ -6,7 +6,7 @@ public enum Accion {
 	SALIR("Salir") {
 		@Override
 		public void ejecutar() {
-			// Vacio
+			vista.terminar();
 		}
 	},
 	INSERTAR_CLIENTE("Insertar cliente") {
@@ -25,7 +25,7 @@ public enum Accion {
 	},
 	INSERTAR_ALQUILER("Insertar alquiler") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws OperationNotSupportedException {
 			vista.insertarAlquiler();
 		}
 	},
@@ -55,27 +55,27 @@ public enum Accion {
 	},
 	DEVOLVER_ALQUILER_CLIENTE("Devolver alquiler de un cliente") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws OperationNotSupportedException {
 			vista.devolverAlquilerCliente();
 
 		}
 	},
 	DEVOLVER_ALQUILER_VEHICULO("Devolver alquiler de un vehiculo") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws OperationNotSupportedException {
 			vista.devolverAlquilerVehiculo();
 
 		}
 	},
 	BORRAR_CLIENTE("Borrar cliente") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws OperationNotSupportedException {
 			vista.borrarCliente();
 		}
 	},
 	BORRAR_VEHICULO("Borrar vehiculo") {
 		@Override
-		public void ejecutar() {
+		public void ejecutar() throws OperationNotSupportedException {
 			vista.borrarVehiculo();
 		}
 	},
@@ -127,12 +127,6 @@ public enum Accion {
 	private static VistaTexto vista;
 
 	private Accion(String texto) {
-		if (texto == null) {
-			throw new NullPointerException("ERROR: El texto no puede ser nulo.");
-		}
-		if (texto.isBlank()) {
-			throw new IllegalArgumentException("ERROR: El texto no puede estar en blanco.");
-		}
 		this.texto = texto;
 	}
 

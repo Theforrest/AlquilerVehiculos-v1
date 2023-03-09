@@ -36,43 +36,48 @@ public class ModeloCascada extends Modelo {
 		if (alquiler == null) {
 			throw new NullPointerException("ERROR: No se puede realizar un alquiler nulo.");
 		}
-		if (getClientes().buscar(alquiler.getCliente()) == null) {
+		Cliente cliente = getClientes().buscar(alquiler.getCliente());
+		if (cliente == null) {
 			throw new OperationNotSupportedException("ERROR: No existe el cliente del alquiler.");
 		}
-		if (getVehiculos().buscar(alquiler.getVehiculo()) == null) {
-			throw new OperationNotSupportedException("ERROR: No existe el turismo del alquiler.");
+		Vehiculo vehiculo = getVehiculos().buscar(alquiler.getVehiculo());
+		if (vehiculo == null) {
+			throw new OperationNotSupportedException("ERROR: No existe el vehículo del alquiler.");
 		}
 
-		getAlquileres().insertar(new Alquiler(getClientes().buscar(alquiler.getCliente()),
-				getVehiculos().buscar(alquiler.getVehiculo()), alquiler.getFechaAlquiler()));
+		getAlquileres().insertar(new Alquiler(cliente,
+				vehiculo, alquiler.getFechaAlquiler()));
 
 	}
 
 	@Override
 	public Cliente buscar(Cliente cliente) {
-		if (getClientes().buscar(cliente) == null) {
+		Cliente busqueda = getClientes().buscar(cliente);
+		if (busqueda == null) {
 			return null;
 
 		}
-		return new Cliente(getClientes().buscar(cliente));
+		return new Cliente(busqueda);
 	}
 
 	@Override
 	public Vehiculo buscar(Vehiculo vehiculo) {
-		if (getVehiculos().buscar(vehiculo) == null) {
+		Vehiculo busqueda = getVehiculos().buscar(vehiculo);
+		if (busqueda == null) {
 			return null;
 
 		}
-		return Vehiculo.copiar(getVehiculos().buscar(vehiculo));
+		return Vehiculo.copiar(busqueda);
 	}
 
 	@Override
 	public Alquiler buscar(Alquiler alquiler) {
-		if (getAlquileres().buscar(alquiler) == null) {
+		Alquiler busqueda = getAlquileres().buscar(alquiler);
+		if (busqueda == null) {
 			return null;
 
 		}
-		return new Alquiler(getAlquileres().buscar(alquiler));
+		return new Alquiler(busqueda);
 	}
 
 	@Override

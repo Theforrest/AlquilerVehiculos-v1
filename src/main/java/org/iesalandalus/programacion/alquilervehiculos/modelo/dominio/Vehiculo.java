@@ -3,7 +3,7 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 import java.util.Objects;
 
 public abstract class Vehiculo {
-	private static final String ER_MARCA = "^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)( [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$|^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\\-[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)$|^([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*$|^([A-ZÁÉÍÓÚÑ]+)+$";
+	private static final String ER_MARCA = "([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(( [A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)|(\\-[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)|([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+))?|([A-ZÁÉÍÓÚÑ]+)";
 	private static final String ER_MATRICULA = "\\d{4}[QWRTYPSDFGHJKLZXCVBNM]{3}";
 
 	private String marca;

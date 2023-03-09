@@ -32,27 +32,27 @@ public class VistaTexto extends Vista {
 	}
 
 	public void terminar() {
-		System.out.print("Adios");
+		getControlador().terminar();
+		
 	}
 
 	public void insertarCliente() throws OperationNotSupportedException {
 		Cliente cliente = Consola.leerCliente();
 		getControlador().insertar(cliente);
+		System.out.print("\nCliente insertado correctamente\n");
 	}
 
 	public void insertarVehiculo() throws OperationNotSupportedException {
 		Vehiculo vehiculo = Consola.leerVehiculo();
 		getControlador().insertar(vehiculo);
+		System.out.print("\nVehiculo insertado correctamente\n");
 
 	}
 
-	public void insertarAlquiler() {
+	public void insertarAlquiler() throws OperationNotSupportedException {
 		Alquiler alquiler = Consola.leerAlquiler();
-		try {
-			getControlador().insertar(alquiler);
-		} catch (OperationNotSupportedException e) {
-			System.out.print(e.getMessage());
-		}
+		getControlador().insertar(alquiler);
+		System.out.print("\nAlquiler insertado correctamente\n");
 
 	}
 
@@ -80,51 +80,49 @@ public class VistaTexto extends Vista {
 		String telefono = Consola.leerTelefono();
 
 		getControlador().modificar(cliente, nombre, telefono);
+		System.out.print("\nCliente modificado correctamente\n");
+
 	}
 
-	public void devolverAlquilerCliente() {
+	public void devolverAlquilerCliente() throws OperationNotSupportedException {
 		Cliente cliente = Consola.leerClienteDni();
 		LocalDate fechaDevolucion = Consola.leerFechaDevolucion();
 
-		try {
-			getControlador().devolver(cliente, fechaDevolucion);
-		} catch (OperationNotSupportedException e) {
-			e.getMessage();
-		}
+		getControlador().devolver(cliente, fechaDevolucion);
+		System.out.print("\nAlquiler del cliente devuelto correctamente\n");
+
 	}
 
-	public void devolverAlquilerVehiculo() {
+	public void devolverAlquilerVehiculo() throws OperationNotSupportedException {
 		Vehiculo vehiculo = Consola.leerTurismoMatricula();
 		LocalDate fechaDevolucion = Consola.leerFechaDevolucion();
 
-		try {
-			getControlador().devolver(vehiculo, fechaDevolucion);
-		} catch (OperationNotSupportedException e) {
-			e.getMessage();
-		}
+		getControlador().devolver(vehiculo, fechaDevolucion);
+		System.out.print("\nAlquiler del vehículo devuelto correctamente\n");
+
 	}
 
-	public void borrarCliente() {
+	public void borrarCliente() throws OperationNotSupportedException {
 		Cliente cliente = Consola.leerClienteDni();
-		try {
-			getControlador().borrar(cliente);
-		} catch (OperationNotSupportedException e) {
-			e.getMessage();
-		}
+
+		getControlador().borrar(cliente);
+		System.out.print("\nCliente borrado correctamente\n");
+
 	}
 
-	public void borrarVehiculo() {
+	public void borrarVehiculo() throws OperationNotSupportedException {
 		Vehiculo vehiculo = Consola.leerTurismoMatricula();
-		try {
-			getControlador().borrar(vehiculo);
-		} catch (OperationNotSupportedException e) {
-			e.getMessage();
-		}
+
+		getControlador().borrar(vehiculo);
+		System.out.print("\nVehículo borrado correctamente\n");
+
 	}
 
 	public void borrarAlquiler() throws OperationNotSupportedException {
 		Alquiler alquiler = Consola.leerAlquiler();
 		getControlador().borrar(alquiler);
+		System.out.print("\nAlquiler borrado correctamente\n");
+
 	}
 
 	public void listarClientes() {
@@ -190,7 +188,7 @@ public class VistaTexto extends Vista {
 	public void mostrarEstadisticasMensuales() {
 		Map<TipoVehiculo, Integer> estadisticas = inicializarEstadisticas();
 		for (Map.Entry<TipoVehiculo, Integer> entry : estadisticas.entrySet()) {
-		    System.out.printf("%s alquilados: %s%n", entry.getKey(), entry.getValue());
+			System.out.printf("%s alquilados: %s%n", entry.getKey(), entry.getValue());
 		}
 	}
 }

@@ -27,9 +27,9 @@ public class AlquileresTest {
 
 	private static final String MENSAJE_ERROR_INSERTAR_ALQUILER_NULO = "ERROR: No se puede insertar un alquiler nulo.";
 	private static final String MENSAJE_ERROR_INSERTAR_ALQUILER_CLIENTE_ALQUILER_ABIERTO = "ERROR: El cliente tiene otro alquiler sin devolver.";
-	private static final String MENSAJE_ERROR_INSERTAR_ALQUILER_TURISMO_ALQUILADO = "ERROR: El turismo está actualmente alquilado.";
+	private static final String MENSAJE_ERROR_INSERTAR_ALQUILER_TURISMO_ALQUILADO = "ERROR: El vehículo está actualmente alquilado.";
 	private static final String MENSAJE_ERROR_INSERTAR_ALQUILER_CLIENTE_OTRO_POSTERIOR = "ERROR: El cliente tiene un alquiler posterior.";
-	private static final String MENSAJE_ERROR_INSERTAR_ALQUILER_TURISMO_OTRO_POSTERIOR = "ERROR: El turismo tiene un alquiler posterior.";
+	private static final String MENSAJE_ERROR_INSERTAR_ALQUILER_TURISMO_OTRO_POSTERIOR = "ERROR: El vehículo tiene un alquiler posterior.";
 	private static final String MENSAJE_ERROR_DEVOLVER_CLIENTE_NULO = "ERROR: No se puede devolver un alquiler de un cliente nulo.";
 	private static final String MENSAJE_ERROR_DEVOLVER_CLIENTE_SIN_ALQUILER_ABIERTO = "ERROR: No existe ningún alquiler abierto para ese cliente.";
 	private static final String MENSAJE_ERROR_DEVOLVER_VEHICULO_NULO = "ERROR: No se puede devolver un alquiler de un vehículo nulo.";

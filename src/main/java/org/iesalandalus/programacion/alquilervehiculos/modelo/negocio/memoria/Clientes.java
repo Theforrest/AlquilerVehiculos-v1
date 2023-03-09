@@ -18,11 +18,7 @@ public class Clientes implements IClientes {
 
 	@Override
 	public List<Cliente> get() {
-		List<Cliente> copiaClientes = new ArrayList<>();
-		for (Cliente cliente : coleccionClientes) {
-			copiaClientes.add(cliente);
-		}
-		return copiaClientes;
+		return new ArrayList<>(coleccionClientes);
 	}
 
 	@Override
@@ -46,10 +42,11 @@ public class Clientes implements IClientes {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede buscar un cliente nulo.");
 		}
-		if (!(coleccionClientes.contains(cliente))) {
+		int index = coleccionClientes.indexOf(cliente);
+		if (index == -1) {
 			return null;
 		}
-		return coleccionClientes.get(coleccionClientes.indexOf(cliente));
+		return coleccionClientes.get(index);
 	}
 
 	@Override
@@ -67,20 +64,21 @@ public class Clientes implements IClientes {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede modificar un cliente nulo.");
 		}
-		if (buscar(cliente) == null) {
+		Cliente busqueda = buscar(cliente);
+		if (busqueda == null) {
 			throw new OperationNotSupportedException("ERROR: No existe ningún cliente con ese DNI.");
 		}
 
 		if (!((nombre == null || nombre.isBlank()) && (telefono == null || telefono.isBlank()))) {
 
 			if (nombre == null || nombre.isBlank()) {
-				buscar(cliente).setTelefono(telefono);
+				busqueda.setTelefono(telefono);
 			} else {
 				if (telefono == null || telefono.isBlank()) {
-					buscar(cliente).setNombre(nombre);
+					busqueda.setNombre(nombre);
 				} else {
-					buscar(cliente).setNombre(nombre);
-					buscar(cliente).setTelefono(telefono);
+					busqueda.setNombre(nombre);
+					busqueda.setTelefono(telefono);
 				}
 			}
 

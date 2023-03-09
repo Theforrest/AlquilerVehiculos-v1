@@ -22,11 +22,8 @@ public class Alquileres implements IAlquileres {
 
 	@Override
 	public List<Alquiler> get() {
-		List<Alquiler> copiaAlquileres = new ArrayList<>();
-		for (Alquiler alquiler : coleccionAlquileres) {
-			copiaAlquileres.add(alquiler);
-		}
-		return copiaAlquileres;
+		
+		return new ArrayList<>(coleccionAlquileres);
 	}
 
 	@Override
@@ -61,24 +58,28 @@ public class Alquileres implements IAlquileres {
 	private void comprobarAlquiler(Cliente cliente, Vehiculo vehiculo, LocalDate fechaAlquiler)
 			throws OperationNotSupportedException {
 
-		for (Alquiler alquiler : get(cliente)) {
-			if (alquiler.getFechaDevolucion() == null) {
-				throw new OperationNotSupportedException("ERROR: El cliente tiene otro alquiler sin devolver.");
+		for (Alquiler alquiler : get()) {
+			if (alquiler.getCliente().equals(cliente)) {
+				if (alquiler.getFechaDevolucion() == null) {
+					throw new OperationNotSupportedException("ERROR: El cliente tiene otro alquiler sin devolver.");
+				}
+				if (alquiler.getFechaDevolucion().isAfter(fechaAlquiler)
+						|| alquiler.getFechaDevolucion().isEqual(fechaAlquiler)) {
+					throw new OperationNotSupportedException("ERROR: El cliente tiene un alquiler posterior.");
+				}
 			}
-			if (alquiler.getFechaDevolucion().isAfter(fechaAlquiler)
-					|| alquiler.getFechaDevolucion().isEqual(fechaAlquiler)) {
-				throw new OperationNotSupportedException("ERROR: El cliente tiene un alquiler posterior.");
+			if (alquiler.getVehiculo().equals(vehiculo)) {
+				if (alquiler.getFechaDevolucion() == null) {
+					throw new OperationNotSupportedException("ERROR: El vehículo está actualmente alquilado.");
+				}
+				if (alquiler.getFechaDevolucion().isAfter(fechaAlquiler)
+						|| alquiler.getFechaDevolucion().isEqual(fechaAlquiler)) {
+					throw new OperationNotSupportedException("ERROR: El vehículo tiene un alquiler posterior.");
+				}
 			}
 		}
-		for (Alquiler alquiler : get(vehiculo)) {
-			if (alquiler.getFechaDevolucion() == null) {
-				throw new OperationNotSupportedException("ERROR: El turismo está actualmente alquilado.");
-			}
-			if (alquiler.getFechaDevolucion().isAfter(fechaAlquiler)
-					|| alquiler.getFechaDevolucion().isEqual(fechaAlquiler)) {
-				throw new OperationNotSupportedException("ERROR: El turismo tiene un alquiler posterior.");
-			}
-		}
+		
+		
 	}
 
 	@Override
@@ -95,10 +96,11 @@ public class Alquileres implements IAlquileres {
 		if (alquiler == null) {
 			throw new NullPointerException("ERROR: No se puede buscar un alquiler nulo.");
 		}
-		if (!(coleccionAlquileres.contains(alquiler))) {
+		int index = coleccionAlquileres.indexOf(alquiler);
+		if (index == -1) {
 			return null;
 		}
-		return coleccionAlquileres.get(coleccionAlquileres.indexOf(alquiler));
+		return coleccionAlquileres.get(index);
 	}
 
 	@Override
@@ -128,15 +130,15 @@ public class Alquileres implements IAlquileres {
 			throw new NullPointerException("ERROR: No se puede devolver un alquiler de un cliente nulo.");
 		}
 		Iterator<Alquiler> iterador = get(cliente).iterator();
-
-		while (iterador.hasNext()) {
-			Alquiler alquiler = iterador.next();
-			if (alquiler.getFechaDevolucion() == null) {
-				return alquiler;
+		Alquiler alquiler = null;
+		while (iterador.hasNext() && alquiler == null) {
+			Alquiler siguiente = iterador.next();
+			if (siguiente.getFechaDevolucion() == null) {
+				alquiler = siguiente;
 			}
 		}
 
-		return null;
+		return alquiler;
 	}
 
 	@Override

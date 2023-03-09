@@ -8,7 +8,7 @@ import java.util.Objects;
 import javax.naming.OperationNotSupportedException;
 
 public class Alquiler {
-	static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	private static final int PRECIO_DIA = 20;
 
 	private LocalDate fechaAlquiler;
@@ -128,8 +128,8 @@ public class Alquiler {
 	@Override
 	public String toString() {
 
-		return String.format("%s <---> %s, %s - %s (%d€)", cliente, vehiculo, fechaAlquiler,
-				(fechaDevolucion == null) ? "Aún no devuelto" : fechaDevolucion, getPrecio());
+		return String.format("%s <---> %s, %s - %s (%d€)", cliente, vehiculo, fechaAlquiler.format(FORMATO_FECHA),
+				(fechaDevolucion == null) ? "Aún no devuelto" : fechaDevolucion.format(FORMATO_FECHA), getPrecio());
 
 	}
 

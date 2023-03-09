@@ -33,7 +33,7 @@ public class Consola {
 	}
 
 	public static void mostrarMenuAcciones() {
-		mostrarCabezera("Este es un programa para manejar los alquileres de turismos realizados por clientes");
+		mostrarCabezera("Este es un programa para manejar los alquileres de vehículos realizados por clientes");
 		for (int i = 0; i < Accion.values().length; i++) {
 			System.out.printf("%n%s", Accion.values()[i]);
 
@@ -78,7 +78,7 @@ public class Consola {
 				System.out.printf("%n%s%n%n", e.getMessage());
 			}
 
-		} while (i < 0 || i > Accion.values().length);
+		} while (accion == null);
 
 		return accion;
 	}
@@ -151,7 +151,7 @@ public class Consola {
 	}
 
 	public static Vehiculo leerTurismoMatricula() {
-		String matricula = leerCadena("Escriba la matricula del turismo");
+		String matricula = leerCadena("Escriba la matricula del vehículo");
 		return Vehiculo.getVehiculoConMatricula(matricula);
 	}
 

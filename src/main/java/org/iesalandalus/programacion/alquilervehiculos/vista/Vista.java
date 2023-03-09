@@ -1,6 +1,6 @@
 package org.iesalandalus.programacion.alquilervehiculos.vista;
 
-import org.iesalandalus.programacion.alquilervehiculos.modelo.controlador.Controlador;
+import org.iesalandalus.programacion.alquilervehiculos.controlador.Controlador;
 
 public abstract class Vista {
 
