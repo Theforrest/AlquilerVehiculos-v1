@@ -33,7 +33,7 @@ public class VistaTexto extends Vista {
 
 	public void terminar() {
 		getControlador().terminar();
-		
+
 	}
 
 	public void insertarCliente() throws OperationNotSupportedException {
@@ -127,40 +127,81 @@ public class VistaTexto extends Vista {
 
 	public void listarClientes() {
 		List<Cliente> clientes = getControlador().getClientes();
-		clientes.sort(Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni));
-		for (int i = 0; i < clientes.size(); i++) {
-			System.out.printf("%d. %s%n", i + 1, clientes.get(i));
+		if (!clientes.isEmpty()) {
+			clientes.sort(Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni));
+			for (int i = 0; i < clientes.size(); i++) {
+				System.out.printf("%d. %s%n", i + 1, clientes.get(i));
+			}
+		} else {
+			System.out.print("\nNo hay clientes que listar\n");
 		}
+
 	}
 
 	public void listarVehiculos() {
 		List<Vehiculo> vehiculos = getControlador().getTurismos();
-		vehiculos.sort(Comparator.comparing(Vehiculo::getMarca).thenComparing(Vehiculo::getModelo)
-				.thenComparing(Vehiculo::getMatricula));
-		for (int i = 0; i < vehiculos.size(); i++) {
-			System.out.printf("%d. %s%n", i + 1, vehiculos.get(i));
+		if (!vehiculos.isEmpty()) {
+			vehiculos.sort(Comparator.comparing(Vehiculo::getMarca).thenComparing(Vehiculo::getModelo)
+					.thenComparing(Vehiculo::getMatricula));
+			for (int i = 0; i < vehiculos.size(); i++) {
+				System.out.printf("%d. %s%n", i + 1, vehiculos.get(i));
+			}
+		} else {
+			System.out.print("\nNo hay vehículos que listar\n");
 		}
+
 	}
 
 	public void listarAlquileres() {
 		List<Alquiler> alquileres = getControlador().getAlquileres();
-		alquileres.sort(Comparator.comparing(Alquiler::getFechaAlquiler));
-		for (int i = 0; i < alquileres.size(); i++) {
-			System.out.printf("%d. %s%n", i + 1, alquileres.get(i));
+		if (!alquileres.isEmpty()) {
+			Comparator<Cliente> comparadorCliente = Comparator.comparing(Cliente::getNombre)
+					.thenComparing(Cliente::getDni);
+			alquileres.sort(Comparator.comparing(Alquiler::getFechaAlquiler).thenComparing(Alquiler::getCliente,
+					comparadorCliente));
+			for (int i = 0; i < alquileres.size(); i++) {
+				System.out.printf("%d. %s%n", i + 1, alquileres.get(i));
+			}
+		} else {
+			System.out.print("\nNo hay alquileres que listar\n");
 		}
+
 	}
 
 	public void listarAlquileresCliente() {
 		Cliente cliente = Consola.leerClienteDni();
 		List<Alquiler> alquileres = getControlador().getAlquileres(cliente);
-		for (int i = 0; i < alquileres.size(); i++) {
-			System.out.printf("%d. %s%n", i + 1, alquileres.get(i));
+		if (!alquileres.isEmpty()) {
+			Comparator<Cliente> comparadorCliente = Comparator.comparing(Cliente::getNombre)
+					.thenComparing(Cliente::getDni);
+			alquileres.sort(Comparator.comparing(Alquiler::getFechaAlquiler).thenComparing(Alquiler::getCliente,
+					comparadorCliente));
+			for (int i = 0; i < alquileres.size(); i++) {
+				System.out.printf("%d. %s%n", i + 1, alquileres.get(i));
+			}
+		} else {
+			System.out.print("\nEse cliente no tiene alquileres que listar\n");
 		}
+
 	}
 
 	public void listarAlquileresVehiculo() {
 		Vehiculo vehiculo = Consola.leerTurismoMatricula();
 		List<Alquiler> alquileres = getControlador().getAlquileres(vehiculo);
+		if (!alquileres.isEmpty()) {
+			Comparator<Cliente> comparadorCliente = Comparator.comparing(Cliente::getNombre)
+					.thenComparing(Cliente::getDni);
+			alquileres.sort(Comparator.comparing(Alquiler::getFechaAlquiler).thenComparing(Alquiler::getCliente,
+					comparadorCliente));
+			for (int i = 0; i < alquileres.size(); i++) {
+				System.out.printf("%d. %s%n", i + 1, alquileres.get(i));
+			}
+		} else {
+			System.out.print("\nEse vehículos no tiene alquileres que listar\n");
+		}
+		Comparator<Cliente> comparadorCliente = Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni);
+		alquileres.sort(Comparator.comparing(Alquiler::getFechaAlquiler).thenComparing(Alquiler::getCliente,
+				comparadorCliente));
 		for (int i = 0; i < alquileres.size(); i++) {
 			System.out.printf("%d. %s%n", i + 1, alquileres.get(i));
 		}
@@ -187,8 +228,14 @@ public class VistaTexto extends Vista {
 
 	public void mostrarEstadisticasMensuales() {
 		Map<TipoVehiculo, Integer> estadisticas = inicializarEstadisticas();
-		for (Map.Entry<TipoVehiculo, Integer> entry : estadisticas.entrySet()) {
-			System.out.printf("%s alquilados: %s%n", entry.getKey(), entry.getValue());
+		if (!estadisticas.isEmpty()) {
+			for (Map.Entry<TipoVehiculo, Integer> entry : estadisticas.entrySet()) {
+				System.out.printf("%s alquilados: %s%n", entry.getKey(), entry.getValue());
+			}
+		} else {
+			System.out.print("\nNo hay estadisticas que mostrar en este mes\n");
+
 		}
+		
 	}
 }
