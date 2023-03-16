@@ -8,7 +8,7 @@ import java.util.Objects;
 import javax.naming.OperationNotSupportedException;
 
 public class Alquiler {
-	static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+	static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private static final int PRECIO_DIA = 20;
 
 	private LocalDate fechaAlquiler;

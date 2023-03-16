@@ -130,8 +130,8 @@ public enum Accion {
 		this.texto = texto;
 	}
 
-	static void setVista(VistaTexto vistaa) {
-		vista = vistaa;
+	static void setVista(VistaTexto vista) {
+		Accion.vista = vista;
 	}
 
 	public abstract void ejecutar() throws OperationNotSupportedException;

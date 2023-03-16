@@ -214,7 +214,8 @@ public class VistaTexto extends Vista {
 		List<Alquiler> alquileres = getControlador().getAlquileres();
 
 		for (Alquiler alquiler : alquileres) {
-			if (alquiler.getFechaAlquiler().getMonth().equals(mes.getMonth())) {
+			if (alquiler.getFechaAlquiler().getMonth().equals(mes.getMonth())
+					&& alquiler.getFechaAlquiler().getYear() == mes.getYear()) {
 				estadisticas.put(TipoVehiculo.get(alquiler.getVehiculo()),
 						estadisticas.containsKey(TipoVehiculo.get(alquiler.getVehiculo()))
 								? estadisticas.get(TipoVehiculo.get(alquiler.getVehiculo())) + 1
@@ -236,6 +237,6 @@ public class VistaTexto extends Vista {
 			System.out.print("\nNo hay estadisticas que mostrar en este mes\n");
 
 		}
-		
+
 	}
 }

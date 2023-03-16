@@ -62,18 +62,14 @@ public class Alquileres implements IAlquileres {
 			if (alquiler.getCliente().equals(cliente)) {
 				if (alquiler.getFechaDevolucion() == null) {
 					throw new OperationNotSupportedException("ERROR: El cliente tiene otro alquiler sin devolver.");
-				}
-				if (alquiler.getFechaDevolucion().isAfter(fechaAlquiler)
-						|| alquiler.getFechaDevolucion().isEqual(fechaAlquiler)) {
+				} else if (alquiler.getFechaDevolucion().compareTo(fechaAlquiler) >= 0) {
 					throw new OperationNotSupportedException("ERROR: El cliente tiene un alquiler posterior.");
 				}
 			}
 			if (alquiler.getVehiculo().equals(vehiculo)) {
 				if (alquiler.getFechaDevolucion() == null) {
 					throw new OperationNotSupportedException("ERROR: El vehículo está actualmente alquilado.");
-				}
-				if (alquiler.getFechaDevolucion().isAfter(fechaAlquiler)
-						|| alquiler.getFechaDevolucion().isEqual(fechaAlquiler)) {
+				} else if (alquiler.getFechaDevolucion().compareTo(fechaAlquiler) >= 0) {
 					throw new OperationNotSupportedException("ERROR: El vehículo tiene un alquiler posterior.");
 				}
 			}

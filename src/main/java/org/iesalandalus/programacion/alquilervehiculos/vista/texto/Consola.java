@@ -16,7 +16,8 @@ import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {
 
-	private static final String PATRON_FECHA = "dd-MM-yyyy";
+	private static final String PATRON_FECHA = "dd/MM/yyyy";
+	private static final String PATRON_MES = "MM/yyyy";
 	private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern(PATRON_FECHA);
 
 	private Consola() {
@@ -52,12 +53,15 @@ public class Consola {
 
 	}
 
-	private static LocalDate leerFecha(String mensaje) {
+	private static LocalDate leerFecha(String mensaje, String patron) {
 		String fecha;
 
 		do {
-			System.out.printf("%n%s: ", mensaje);
+			System.out.printf("%n%s (%s): ", mensaje, patron);
 			fecha = Entrada.cadena();
+			if (patron.equals(PATRON_MES)) {
+				fecha = "01/" + fecha;
+			}
 			try {
 				return LocalDate.parse(fecha, FORMATO_FECHA);
 			} catch (DateTimeParseException e) {
@@ -119,7 +123,7 @@ public class Consola {
 				System.out.printf("%n%s%n%n", e.getMessage());
 			}
 
-		} while (i < 0 || i > TipoVehiculo.values().length);
+		} while (tipoVehiculo == null);
 
 		return tipoVehiculo;
 	}
@@ -128,21 +132,23 @@ public class Consola {
 		String marca = leerCadena("Escriba la marca del vehiculo");
 		String modelo = leerCadena("Escriba el modelo del vehiculo");
 		String matricula = leerCadena("Escriba la matricula del vehiculo");
-
+		Vehiculo vehiculo;
+		
 		switch (tipoVehiculo) {
 		case AUTOBUS:
-			return new Autobus(marca, modelo, leerEntero("Escriba las plazas del autobus"), matricula);
+			vehiculo = new Autobus(marca, modelo, leerEntero("Escriba las plazas del autobus"), matricula);
+			break;
 		case FURGONETA:
-			return new Furgoneta(marca, modelo, leerEntero("Escriba el pma de la furgoneta"),
+			vehiculo = new Furgoneta(marca, modelo, leerEntero("Escriba el pma de la furgoneta"),
 					leerEntero("Escriba las plazas de la furgoneta"), matricula);
-
+			break;
 		case TURISMO:
-			return new Turismo(marca, modelo, leerEntero("Escriba la cilindrada del turismo"), matricula);
-
+			vehiculo = new Turismo(marca, modelo, leerEntero("Escriba la cilindrada del turismo"), matricula);
+			break;
 		default:
-			return null;
-
+			vehiculo = null;
 		}
+		return vehiculo;
 	}
 
 	public static Vehiculo leerVehiculo() {
@@ -158,21 +164,16 @@ public class Consola {
 	public static Alquiler leerAlquiler() {
 		Cliente cliente = leerClienteDni();
 		Vehiculo vehiculo = leerTurismoMatricula();
-		LocalDate fechaAlquiler = leerFecha("Escriba la fecha de alquiler");
+		LocalDate fechaAlquiler = leerFecha("Escriba la fecha de alquiler", PATRON_FECHA);
 		return new Alquiler(cliente, vehiculo, fechaAlquiler);
 	}
 
 	public static LocalDate leerFechaDevolucion() {
-		return leerFecha("Escriba la fecha de devolucion");
+		return leerFecha("Escriba la fecha de devolucion", PATRON_FECHA);
 	}
 
 	public static LocalDate leerMes() {
-		int mes;
-		do {
-			mes = leerEntero("Escriba el mes");
-		} while (mes < 1 | mes > 12);
-
-		return LocalDate.parse("01-01-1970", FORMATO_FECHA).withMonth(mes);
+		return leerFecha("Escriba el mes que quiere", PATRON_MES);
 	}
 
 }
