@@ -18,7 +18,7 @@ public class Vehiculos implements IVehiculos {
 
 	@Override
 	public List<Vehiculo> get() {
-		
+
 		return new ArrayList<>(coleccionVehiculos);
 	}
 
@@ -43,11 +43,12 @@ public class Vehiculos implements IVehiculos {
 		if (vehiculo == null) {
 			throw new NullPointerException("ERROR: No se puede buscar un vehículo nulo.");
 		}
+		Vehiculo busqueda = null;
 		int index = coleccionVehiculos.indexOf(vehiculo);
-		if (index == -1) {
-			return null;
+		if (index != -1) {
+			busqueda = coleccionVehiculos.get(index);
 		}
-		return coleccionVehiculos.get(index);
+		return busqueda;
 	}
 
 	@Override

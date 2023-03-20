@@ -133,7 +133,7 @@ public class Consola {
 		String modelo = leerCadena("Escriba el modelo del vehiculo");
 		String matricula = leerCadena("Escriba la matricula del vehiculo");
 		Vehiculo vehiculo;
-		
+
 		switch (tipoVehiculo) {
 		case AUTOBUS:
 			vehiculo = new Autobus(marca, modelo, leerEntero("Escriba las plazas del autobus"), matricula);
@@ -156,14 +156,14 @@ public class Consola {
 		return leerVehiculo(elegirTipoVehiculo());
 	}
 
-	public static Vehiculo leerTurismoMatricula() {
+	public static Vehiculo leerVehiculoMatricula() {
 		String matricula = leerCadena("Escriba la matricula del vehículo");
 		return Vehiculo.getVehiculoConMatricula(matricula);
 	}
 
 	public static Alquiler leerAlquiler() {
 		Cliente cliente = leerClienteDni();
-		Vehiculo vehiculo = leerTurismoMatricula();
+		Vehiculo vehiculo = leerVehiculoMatricula();
 		LocalDate fechaAlquiler = leerFecha("Escriba la fecha de alquiler", PATRON_FECHA);
 		return new Alquiler(cliente, vehiculo, fechaAlquiler);
 	}

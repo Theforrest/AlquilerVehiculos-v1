@@ -6,7 +6,7 @@ public enum Accion {
 	SALIR("Salir") {
 		@Override
 		public void ejecutar() {
-			vista.terminar();
+			// Salir no realiza ninguna acción, simplemente existe para detener el bucle
 		}
 	},
 	INSERTAR_CLIENTE("Insertar cliente") {

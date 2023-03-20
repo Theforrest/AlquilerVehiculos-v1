@@ -22,7 +22,7 @@ public class Alquileres implements IAlquileres {
 
 	@Override
 	public List<Alquiler> get() {
-		
+
 		return new ArrayList<>(coleccionAlquileres);
 	}
 
@@ -74,8 +74,7 @@ public class Alquileres implements IAlquileres {
 				}
 			}
 		}
-		
-		
+
 	}
 
 	@Override
@@ -92,11 +91,12 @@ public class Alquileres implements IAlquileres {
 		if (alquiler == null) {
 			throw new NullPointerException("ERROR: No se puede buscar un alquiler nulo.");
 		}
+		Alquiler busqueda = null;
 		int index = coleccionAlquileres.indexOf(alquiler);
-		if (index == -1) {
-			return null;
+		if (index != -1) {
+			busqueda = coleccionAlquileres.get(index);
 		}
-		return coleccionAlquileres.get(index);
+		return busqueda;
 	}
 
 	@Override

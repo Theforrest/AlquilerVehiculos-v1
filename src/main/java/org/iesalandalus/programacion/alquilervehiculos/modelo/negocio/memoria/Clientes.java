@@ -42,11 +42,12 @@ public class Clientes implements IClientes {
 		if (cliente == null) {
 			throw new NullPointerException("ERROR: No se puede buscar un cliente nulo.");
 		}
+		Cliente busqueda = null;
 		int index = coleccionClientes.indexOf(cliente);
-		if (index == -1) {
-			return null;
+		if (index != -1) {
+			busqueda = coleccionClientes.get(index);
 		}
-		return coleccionClientes.get(index);
+		return busqueda;
 	}
 
 	@Override

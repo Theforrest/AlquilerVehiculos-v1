@@ -50,6 +50,6 @@ public enum TipoVehiculo {
 
 	@Override
 	public String toString() {
-		return String.format("%s",  nombre);
+		return String.format("%s", nombre);
 	}
 }

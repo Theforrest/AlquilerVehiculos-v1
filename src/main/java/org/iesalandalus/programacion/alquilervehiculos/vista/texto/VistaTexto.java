@@ -29,10 +29,11 @@ public class VistaTexto extends Vista {
 			}
 		} while (!(accion.equals(Accion.SALIR)));
 
+		getControlador().terminar();
 	}
 
 	public void terminar() {
-		getControlador().terminar();
+		System.out.printf("%nBye bye%n");
 
 	}
 
@@ -63,7 +64,7 @@ public class VistaTexto extends Vista {
 	}
 
 	public void buscarVehiculo() {
-		Vehiculo vehiculo = Consola.leerTurismoMatricula();
+		Vehiculo vehiculo = Consola.leerVehiculoMatricula();
 		System.out.printf("%s%n", (getControlador().buscar(vehiculo) == null) ? "Turismo no encontrado"
 				: getControlador().buscar(vehiculo));
 	}
@@ -94,7 +95,7 @@ public class VistaTexto extends Vista {
 	}
 
 	public void devolverAlquilerVehiculo() throws OperationNotSupportedException {
-		Vehiculo vehiculo = Consola.leerTurismoMatricula();
+		Vehiculo vehiculo = Consola.leerVehiculoMatricula();
 		LocalDate fechaDevolucion = Consola.leerFechaDevolucion();
 
 		getControlador().devolver(vehiculo, fechaDevolucion);
@@ -111,7 +112,7 @@ public class VistaTexto extends Vista {
 	}
 
 	public void borrarVehiculo() throws OperationNotSupportedException {
-		Vehiculo vehiculo = Consola.leerTurismoMatricula();
+		Vehiculo vehiculo = Consola.leerVehiculoMatricula();
 
 		getControlador().borrar(vehiculo);
 		System.out.print("\nVehículo borrado correctamente\n");
@@ -186,7 +187,7 @@ public class VistaTexto extends Vista {
 	}
 
 	public void listarAlquileresVehiculo() {
-		Vehiculo vehiculo = Consola.leerTurismoMatricula();
+		Vehiculo vehiculo = Consola.leerVehiculoMatricula();
 		List<Alquiler> alquileres = getControlador().getAlquileres(vehiculo);
 		if (!alquileres.isEmpty()) {
 			Comparator<Cliente> comparadorCliente = Comparator.comparing(Cliente::getNombre)
@@ -199,12 +200,7 @@ public class VistaTexto extends Vista {
 		} else {
 			System.out.print("\nEse vehículos no tiene alquileres que listar\n");
 		}
-		Comparator<Cliente> comparadorCliente = Comparator.comparing(Cliente::getNombre).thenComparing(Cliente::getDni);
-		alquileres.sort(Comparator.comparing(Alquiler::getFechaAlquiler).thenComparing(Alquiler::getCliente,
-				comparadorCliente));
-		for (int i = 0; i < alquileres.size(); i++) {
-			System.out.printf("%d. %s%n", i + 1, alquileres.get(i));
-		}
+		
 	}
 
 	private Map<TipoVehiculo, Integer> inicializarEstadisticas() {

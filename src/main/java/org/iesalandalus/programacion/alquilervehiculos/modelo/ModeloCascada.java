@@ -45,39 +45,41 @@ public class ModeloCascada extends Modelo {
 			throw new OperationNotSupportedException("ERROR: No existe el vehículo del alquiler.");
 		}
 
-		getAlquileres().insertar(new Alquiler(cliente,
-				vehiculo, alquiler.getFechaAlquiler()));
+		getAlquileres().insertar(new Alquiler(cliente, vehiculo, alquiler.getFechaAlquiler()));
 
 	}
 
 	@Override
 	public Cliente buscar(Cliente cliente) {
 		Cliente busqueda = getClientes().buscar(cliente);
-		if (busqueda == null) {
-			return null;
+		Cliente resultado = null;
+		if (busqueda != null) {
+			resultado = new Cliente(busqueda);
 
 		}
-		return new Cliente(busqueda);
+		return resultado;
 	}
 
 	@Override
 	public Vehiculo buscar(Vehiculo vehiculo) {
 		Vehiculo busqueda = getVehiculos().buscar(vehiculo);
-		if (busqueda == null) {
-			return null;
+		Vehiculo resultado = null;
+		if (busqueda != null) {
+			resultado = Vehiculo.copiar(busqueda);
 
 		}
-		return Vehiculo.copiar(busqueda);
+		return resultado;
 	}
 
 	@Override
 	public Alquiler buscar(Alquiler alquiler) {
 		Alquiler busqueda = getAlquileres().buscar(alquiler);
-		if (busqueda == null) {
-			return null;
+		Alquiler resultado = null;
+		if (busqueda != null) {
+			resultado = new Alquiler(busqueda);
 
 		}
-		return new Alquiler(busqueda);
+		return resultado;
 	}
 
 	@Override

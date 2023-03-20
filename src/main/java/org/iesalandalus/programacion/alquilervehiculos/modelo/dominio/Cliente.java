@@ -41,9 +41,9 @@ public class Cliente {
 	}
 
 	private boolean comprobarDni(String dni) {
-		final char[] LETRAS_DNI = { 'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q',
+		final char[] letrasDni = { 'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q',
 				'V', 'H', 'L', 'C', 'K', 'E' };
-		return LETRAS_DNI[Integer.parseInt(dni.substring(0, dni.length() - 1)) % 23] == dni.charAt(dni.length() - 1);
+		return letrasDni[Integer.parseInt(dni.substring(0, dni.length() - 1)) % 23] == dni.charAt(dni.length() - 1);
 	}
 
 	public String getDni() {
